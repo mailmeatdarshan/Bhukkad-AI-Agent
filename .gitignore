@@ -1,0 +1,40 @@
+# secrets & env files
+.env
+.env.*
+*.env
+**/.env
+**/.env.*
+!**/.env.example
+
+# python & environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+**/__pycache__/
+**/.venv/
+**/venv/
+
+# RAG artifacts & databases
+backend/data/rag/
+*.sqlite3
+*.db
+
+# deploy / tooling / logs
+.vercel/
+node_modules/
+*.log
+scratch/
+.pytest_cache/
+**/.pytest_cache/
+*.zip
+stitch_extracted/
+nimbus-voice-agent-starter
+
+# os
+.DS_Store
+Thumbs.db

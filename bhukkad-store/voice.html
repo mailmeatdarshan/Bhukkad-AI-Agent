@@ -1,0 +1,430 @@
+<!-- Bhukkad AI Voice Assistant -->
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bhukkad AI - Voice Assistant</title>
+<link rel="icon" type="image/png" href="assets/logo.png"/>
+<link rel="shortcut icon" href="favicon.ico"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Outfit (Headlines) & Inter (Body/Labels) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#785900",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#00201a",
+                      "surface-variant": "#e5e2e1",
+                      "surface-tint": "#b02f00",
+                      "outline": "#907067",
+                      "surface-container-high": "#eae7e7",
+                      "on-tertiary": "#ffffff",
+                      "surface-bright": "#fcf9f8",
+                      "on-error": "#ffffff",
+                      "background": "#fcf9f8",
+                      "surface-dim": "#dcd9d9",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-tertiary-fixed-variant": "#5b4300",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#ffb5a0",
+                      "primary-container": "#ff5722",
+                      "secondary-container": "#68fadd",
+                      "secondary-fixed": "#68fadd",
+                      "tertiary-fixed-dim": "#fabd00",
+                      "inverse-surface": "#303030",
+                      "on-tertiary-fixed": "#261a00",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-container": "#b78a00",
+                      "error": "#ba1a1a",
+                      "outline-variant": "#e4beb4",
+                      "secondary": "#006b5c",
+                      "on-primary-fixed-variant": "#862200",
+                      "tertiary-fixed": "#ffdf9e",
+                      "surface-container": "#f0eded",
+                      "on-primary-container": "#541200",
+                      "on-secondary-container": "#007261",
+                      "on-background": "#1b1c1c",
+                      "surface-container-highest": "#e5e2e1",
+                      "primary-fixed-dim": "#ffb5a0",
+                      "on-surface": "#1b1c1c",
+                      "primary": "#b02f00",
+                      "on-secondary-fixed-variant": "#005145",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#5b4039",
+                      "surface-container-low": "#f6f3f2",
+                      "primary-fixed": "#ffdbd1",
+                      "on-secondary": "#ffffff",
+                      "surface": "#fcf9f8",
+                      "on-tertiary-container": "#372700",
+                      "on-primary-fixed": "#3b0900",
+                      "secondary-fixed-dim": "#44ddc1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "2xl": "1rem",
+                      "3xl": "1.5rem"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "2xl": "48px",
+                      "sm": "12px",
+                      "base": "8px",
+                      "margin-desktop": "64px",
+                      "gutter": "16px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Outfit"],
+                      "headline-lg": ["Outfit"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-lg-mobile": ["Outfit"],
+                      "body-lg": ["Inter"],
+                      "label-lg": ["Inter"],
+                      "display-lg": ["Outfit"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                      "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                      "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                      "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                      "headline-lg-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                      "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                      "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                      "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Custom Animations for AI Pulse */
+        @keyframes subtle-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.6; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .animate-pulse-ring-1 { animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+        .animate-pulse-ring-2 { animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite 0.8s; }
+        .animate-pulse-ring-3 { animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite 1.6s; }
+
+        /* Bhukkad Radiant Saffron & Mint Orb */
+        .bhukkad-ai-orb {
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffc0a8 0%, #ff5722 35%, #b02f00 70%, #006b5c 100%);
+            box-shadow:
+                inset 0 0 6px rgba(255, 230, 200, 0.9),
+                0 0 20px rgba(255, 87, 34, 0.5),
+                0 4px 14px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .bhukkad-ai-orb::after {
+            content: '';
+            position: absolute;
+            top: 6%;
+            left: 14%;
+            width: 42%;
+            height: 30%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 80%);
+            transform: rotate(-25deg);
+            pointer-events: none;
+        }
+
+        @keyframes bhukkadOrbSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .bhukkad-ai-orb.spinning {
+            animation: bhukkadOrbSpin 4s linear infinite;
+        }
+
+        .bhukkad-ai-orb.calling {
+            animation: bhukkadOrbSpin 2.5s linear infinite;
+            box-shadow: 
+                inset 0 0 8px rgba(255, 255, 255, 0.9),
+                0 0 32px rgba(255, 87, 34, 0.9),
+                0 0 55px rgba(0, 107, 92, 0.5);
+        }
+
+        /* Modern Gradient Background */
+        .bg-futuristic-mesh {
+            background-image: 
+                radial-gradient(at 20% 0%, rgba(255, 87, 34, 0.05) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, rgba(104, 250, 221, 0.08) 0px, transparent 50%);
+            background-color: #fcf9f8;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-futuristic-mesh text-on-surface h-screen w-full flex flex-col overflow-hidden relative font-body-md antialiased">
+
+<!-- Logo (Top Left) -->
+<div class="absolute top-0 left-0 p-margin-mobile md:p-margin-desktop z-50">
+<a href="index.html" class="flex items-center text-decoration-none group" title="Bhukkad Home">
+<img alt="Bhukkad Logo" class="h-10 w-10 object-contain rounded-md group-hover:scale-105 transition-transform" src="assets/logo.png"/>
+</a>
+</div>
+
+<!-- Close Action (Top Right) -->
+<div class="absolute top-0 right-0 p-margin-mobile md:p-margin-desktop z-50">
+<a href="index.html" class="w-12 h-12 flex items-center justify-center rounded-full bg-surface shadow-sm text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all duration-200 text-decoration-none" title="Close">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</a>
+</div>
+
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col items-center justify-between py-2xl px-margin-mobile md:px-margin-desktop max-w-[800px] mx-auto w-full relative z-10">
+<!-- Header / Prompt -->
+<header class="text-center w-full mt-xl flex flex-col items-center animate-[subtle-float_6s_ease-in-out_infinite]">
+<div class="inline-flex items-center gap-xs px-sm py-1 rounded-full bg-secondary-container/20 border border-secondary-container/50 mb-md">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-lg text-secondary font-bold">Bhukkad AI</span>
+</div>
+<h1 class="font-headline-lg-mobile md:font-display-lg text-on-surface max-w-[600px] tracking-tight font-black">
+    Bataiye, aaj kya mangwana hai?
+</h1>
+</header>
+
+<!-- Central Visualization & Transcript -->
+<section class="flex-1 w-full flex flex-col items-center justify-center relative my-2xl">
+<!-- Transcript (AI Chat) -->
+<div id="transcriptFeed" class="w-full max-w-lg flex flex-col gap-lg mb-2xl max-h-[220px] overflow-y-auto px-2">
+<!-- Initial AI Greeting -->
+<div class="self-start max-w-[85%] flex items-end gap-sm">
+<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center shadow-md flex-shrink-0 mb-1">
+<span class="material-symbols-outlined text-on-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="bg-secondary-container text-on-secondary-container px-lg py-md rounded-3xl rounded-bl-sm shadow-sm font-body-lg">
+    Namaste! Main hoon aapka AI Food Assistant. Bataiye aaj kya mangwana pasand karenge? Dum Biryani, Cheesy Pizza ya Lava Cake?
+</div>
+</div>
+</div>
+
+<!-- Glowing Listening Visual with Bhukkad Radiant Saffron Orb -->
+<div class="relative w-28 h-28 flex items-center justify-center mt-md">
+<!-- Saffron Pulses -->
+<div id="pulseRing1" class="absolute inset-0 rounded-full border-2 border-primary-container animate-pulse-ring-1 opacity-0"></div>
+<div id="pulseRing2" class="absolute inset-0 rounded-full border-2 border-primary-container animate-pulse-ring-2 opacity-0"></div>
+<div id="pulseRing3" class="absolute inset-0 rounded-full border-2 border-primary-container animate-pulse-ring-3 opacity-0"></div>
+<!-- Central Bhukkad Orb Core -->
+<button id="micButton" class="relative z-10 w-24 h-24 bhukkad-ai-orb spinning cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-300 flex items-center justify-center shadow-2xl p-2">
+  <img src="assets/logo.png" alt="Bhukkad" class="w-full h-full object-contain rounded-full drop-shadow-md" />
+</button>
+</div>
+<p id="micStatusText" class="mt-lg font-label-lg text-primary font-bold">Tap orb to speak</p>
+</section>
+
+<!-- Quick Actions / Suggestions -->
+<footer class="w-full max-w-2xl flex flex-col items-center pb-xl">
+<p class="font-label-sm text-on-surface-variant mb-md uppercase tracking-widest opacity-80 font-bold">Try asking for</p>
+<div class="flex flex-wrap justify-center gap-sm md:gap-md">
+<button class="voice-chip glass-panel px-lg py-sm rounded-full font-label-lg text-on-surface hover:bg-surface-variant hover:border-primary-container transition-all duration-200 flex items-center gap-xs shadow-sm" data-prompt="Mera order track karo">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>
+    Mera order track karo
+</button>
+<button class="voice-chip glass-panel px-lg py-sm rounded-full font-label-lg text-on-surface hover:bg-surface-variant hover:border-primary-container transition-all duration-200 flex items-center gap-xs shadow-sm" data-prompt="Chicken Dum Biryani cart me add karo">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+    Chicken Dum Biryani add karo
+</button>
+<button class="voice-chip glass-panel px-lg py-sm rounded-full font-label-lg text-on-surface hover:bg-surface-variant hover:border-primary-container transition-all duration-200 flex items-center gap-xs shadow-sm" data-prompt="Menu me popular items kya hain?">
+<span class="material-symbols-outlined text-[18px]">local_fire_department</span>
+    Popular items
+</button>
+</div>
+</footer>
+</main>
+
+<!-- Decorative ambient corner glows -->
+<div class="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-primary-container/5 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-secondary-container/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+<script type="module">
+  import { addToCart, applyCoupon, setLastOrder, apiBase } from "./assets/cart-state.js";
+
+  let ws = null;
+  let audioContext = null;
+  let micStream = null;
+  let processor = null;
+  let isRecording = false;
+  let isPlaying = false;
+  let audioQueue = [];
+
+  function connectWS() {
+    if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
+    const api = apiBase().replace(/^https?:\/\//, "");
+    const wsUrl = "ws://" + api + "/ws/voice";
+    ws = new WebSocket(wsUrl);
+
+    ws.onopen = () => {
+      ws.send(JSON.stringify({
+        type: "init",
+        config: {
+          model_key: "openai-lite",
+          tts_provider: "elevenlabs",
+          tts_voice: "Sarah",
+          use_rag: true,
+          tools_enabled: true,
+        }
+      }));
+    };
+
+    ws.onmessage = (e) => {
+      try {
+        const msg = JSON.parse(e.data);
+        if (msg.type === "ready") {
+          document.getElementById("micStatusText").textContent = "AI Chef Ready. Tap mic!";
+        } else if (msg.type === "transcript") {
+          if (msg.role === "user") appendUserMsg(msg.text);
+          else if (msg.role === "assistant") appendAIMsg(msg.text);
+        } else if (msg.type === "audio") {
+          audioQueue.push(msg.audio);
+          if (!isPlaying) playNext();
+        } else if (msg.type === "tool_call") {
+          if (msg.name === "add_to_cart") {
+            addToCart(msg.arguments.product, msg.arguments.tier || "Standard", msg.arguments.seats || 1);
+          } else if (msg.name === "apply_coupon") {
+            applyCoupon(msg.arguments.coupon_code);
+          } else if (msg.name === "checkout" && msg.result?.order_id) {
+            setLastOrder(msg.result);
+          }
+        }
+      } catch (err) { console.error(err); }
+    };
+  }
+
+  function escapeHtml(s = "") {
+    return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  function appendUserMsg(text) {
+    const feed = document.getElementById("transcriptFeed");
+    const d = document.createElement("div");
+    d.className = "self-end max-w-[85%]";
+    d.innerHTML = `<div class="glass-panel px-lg py-md rounded-3xl rounded-br-sm shadow-sm text-on-surface font-body-lg">${escapeHtml(text)}</div>`;
+    feed.appendChild(d);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  function appendAIMsg(text) {
+    const feed = document.getElementById("transcriptFeed");
+    const d = document.createElement("div");
+    d.className = "self-start max-w-[85%] flex items-end gap-sm";
+    d.innerHTML = `
+      <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center shadow-md flex-shrink-0 mb-1">
+        <span class="material-symbols-outlined text-on-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+      </div>
+      <div class="bg-secondary-container text-on-secondary-container px-lg py-md rounded-3xl rounded-bl-sm shadow-sm font-body-lg">
+        ${escapeHtml(text)}
+      </div>
+    `;
+    feed.appendChild(d);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  function playNext() {
+    if (!audioQueue.length) { isPlaying = false; return; }
+    isPlaying = true;
+    const chunk = audioQueue.shift();
+    const a = new Audio("data:audio/mp3;base64," + chunk);
+    a.onended = () => playNext();
+    a.onerror = () => playNext();
+    a.play().catch(() => playNext());
+  }
+
+  async function toggleRec() {
+    if (isRecording) {
+      isRecording = false;
+      document.getElementById("micStatusText").textContent = "Tap mic to speak";
+      document.getElementById("micStatusText").classList.remove("animate-pulse");
+      ["pulseRing1", "pulseRing2", "pulseRing3"].forEach(id => document.getElementById(id).style.opacity = "0");
+      if (processor) processor.disconnect();
+      if (micStream) micStream.getTracks().forEach(t => t.stop());
+    } else {
+      if (!ws || ws.readyState !== WebSocket.OPEN) connectWS();
+      try {
+        micStream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, sampleRate: 16000 } });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+        const source = audioContext.createMediaStreamSource(micStream);
+        processor = audioContext.createScriptProcessor(4096, 1, 1);
+
+        processor.onaudioprocess = (e) => {
+          if (!isRecording || !ws || ws.readyState !== WebSocket.OPEN) return;
+          const input = e.inputBuffer.getChannelData(0);
+          const pcm16 = new Int16Array(input.length);
+          for (let i = 0; i < input.length; i++) {
+            const s = Math.max(-1, Math.min(1, input[i]));
+            pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+          }
+          const b64 = btoa(String.fromCharCode(...new Uint8Array(pcm16.buffer)));
+          ws.send(JSON.stringify({ type: "audio_chunk", data: b64 }));
+        };
+
+        source.connect(processor);
+        processor.connect(audioContext.destination);
+
+        isRecording = true;
+        document.getElementById("micStatusText").textContent = "Listening...";
+        document.getElementById("micStatusText").classList.add("animate-pulse");
+        ["pulseRing1", "pulseRing2", "pulseRing3"].forEach(id => document.getElementById(id).style.opacity = "1");
+      } catch (err) {
+        console.error("Mic error", err);
+        document.getElementById("micStatusText").textContent = "Microphone access denied or unavailable.";
+      }
+    }
+  }
+
+  document.getElementById("micButton").addEventListener("click", toggleRec);
+
+  document.querySelectorAll(".voice-chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const text = btn.getAttribute("data-prompt");
+      appendUserMsg(text);
+      if (!ws || ws.readyState !== WebSocket.OPEN) {
+        connectWS();
+        setTimeout(() => ws.send(JSON.stringify({ type: "text_input", text })), 500);
+      } else {
+        ws.send(JSON.stringify({ type: "text_input", text }));
+      }
+    });
+  });
+
+  connectWS();
+</script>
+</body>
+</html>

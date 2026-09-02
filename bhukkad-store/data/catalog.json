@@ -1,0 +1,1011 @@
+{
+  "company": {
+    "name": "Bhukkad",
+    "legalName": "Bhukkad Foods Technologies Inc.",
+    "tagline": "Hot, Fresh & Delicious Food Delivered to Your Door in 30 Mins",
+    "founded": "2023",
+    "hq": "Bengaluru, India",
+    "about": "Bhukkad is a next-generation AI-powered cloud kitchen and food delivery network. We prepare fresh, gourmet meals across authentic cuisines and deliver them with an average delivery time of under 28 minutes using state-of-the-art temperature-controlled bags.",
+    "mission": "To satisfy your inner bhukkad with chef-crafted food accessible in minutes through voice-first ordering and precision cloud kitchens.",
+    "stats": {
+      "activeCustomers": "500,000+",
+      "kitchenLocations": "45+ Cloud Kitchens",
+      "avgDeliveryMins": "28 mins",
+      "dishesServed": "4,500,000+"
+    }
+  },
+  "policies": {
+    "delivery": {
+      "avgDeliveryTime": "30 minutes",
+      "expressGuarantee": "If your order takes longer than 40 minutes, you get a 100% refund credit in your Bhukkad wallet.",
+      "deliveryRadius": "Up to 8 km from the nearest cloud kitchen hub.",
+      "midnightService": "Open for late-night delivery until 3:00 AM every day.",
+      "deliveryFee": "₹40 (Free on orders above ₹500, or with coupon FREEDEL)."
+    },
+    "refunds": {
+      "coldFood": "100% instant refund or free fresh replacement if food arrives cold or damaged.",
+      "cancellation": "Free cancellation within 90 seconds of placing order before the kitchen starts preparation.",
+      "spillGuarantee": "Special spill-proof leak-resistant tamper-evident packaging. Instant refund if packaging is broken."
+    },
+    "dietary": {
+      "pureVegKitchens": "Dedicated separate preparation areas and cookware for 100% vegetarian dishes.",
+      "halal": "All chicken and meat products are 100% certified Halal and sourced fresh daily.",
+      "allergens": "Nut-free, gluten-free, and dairy-free options clearly labeled on every dish."
+    },
+    "coupons": [
+      {
+        "code": "BHUKKAD50",
+        "description": "50% off up to ₹500 on your order.",
+        "discountPercent": 50,
+        "maxDiscount": 500.0,
+        "minOrder": 300.0
+      },
+      {
+        "code": "BITE50",
+        "description": "50% off up to ₹500 on your order (Bite50 Promo).",
+        "discountPercent": 50,
+        "maxDiscount": 500.0,
+        "minOrder": 300.0
+      },
+      {
+        "code": "PARTY20",
+        "description": "Flat 20% off on all party orders above ₹1000.",
+        "discountPercent": 20,
+        "maxDiscount": 1500.0,
+        "minOrder": 1000.0
+      },
+      {
+        "code": "FREEDEL",
+        "description": "Free delivery on any order.",
+        "discountPercent": 0,
+        "freeDelivery": true,
+        "minOrder": 10.0
+      }
+    ]
+  },
+  "categories": [
+    {
+      "id": "pizzas-pastas",
+      "name": "Pizzas & Pastas",
+      "description": "Hand-tossed sourdough pizzas and authentic Italian pastas.",
+      "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "burgers-wraps",
+      "name": "Burgers & Wraps",
+      "description": "Juicy grilled burgers, crispy patties, and toasted artisan wraps.",
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "biryanis-meals",
+      "name": "Biryanis & Rice Bowls",
+      "description": "Authentic Dum Biryanis and rich Indian curry meal boxes.",
+      "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "healthy-salads",
+      "name": "Healthy Bowls & Salads",
+      "description": "Fresh organic superfood bowls, protein salads, and keto options.",
+      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "sides-appetizers",
+      "name": "Sides & Appetizers",
+      "description": "Crispy wings, loaded fries, stuffed garlic breads, and bites.",
+      "image": "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts & Sweets",
+      "description": "Warm molten lava cakes, pastries, and artisanal ice cream sundaes.",
+      "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "beverages",
+      "name": "Shakes & Beverages",
+      "description": "Iced cold brews, thick milkshakes, and fresh fruit lemonades.",
+      "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "combos",
+      "name": "Value Combos & Deals",
+      "description": "Budget-friendly curated meal combos with up to 30% savings.",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&auto=format&fit=crop&q=80"
+    }
+  ],
+  "products": [
+    {
+      "id": "farmhouse-pizza",
+      "name": "Farmhouse Supreme Pizza",
+      "category": "Pizzas & Pastas",
+      "categoryId": "pizzas-pastas",
+      "is_veg": true,
+      "rating": 4.8,
+      "calories": "680 kcal",
+      "prepTimeMins": 20,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "Loaded with fresh crunchy bell peppers, button mushrooms, sweet golden corn, red onions, and 100% real mozzarella cheese on an herb-infused crust.",
+      "tiers": [
+        {
+          "name": "Regular (7 inch)",
+          "priceMonthly": 749,
+          "priceAnnualMonthly": 749,
+          "unit": "1 person"
+        },
+        {
+          "name": "Medium (10 inch)",
+          "priceMonthly": 1249,
+          "priceAnnualMonthly": 1249,
+          "unit": "2 persons"
+        },
+        {
+          "name": "Large (12 inch)",
+          "priceMonthly": 1649,
+          "priceAnnualMonthly": 1649,
+          "unit": "3-4 persons"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "chicken-pepperoni-pizza",
+      "name": "Smoky Chicken Pepperoni Pizza",
+      "category": "Pizzas & Pastas",
+      "categoryId": "pizzas-pastas",
+      "is_veg": false,
+      "rating": 4.9,
+      "calories": "790 kcal",
+      "prepTimeMins": 22,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "Generously topped with premium cured smoky chicken pepperoni slices, Italian marinara sauce, and gooey melted mozzarella cheese.",
+      "tiers": [
+        {
+          "name": "Regular (7 inch)",
+          "priceMonthly": 899,
+          "priceAnnualMonthly": 899,
+          "unit": "1 person"
+        },
+        {
+          "name": "Medium (10 inch)",
+          "priceMonthly": 1399,
+          "priceAnnualMonthly": 1399,
+          "unit": "2 persons"
+        },
+        {
+          "name": "Large (12 inch)",
+          "priceMonthly": 1899,
+          "priceAnnualMonthly": 1899,
+          "unit": "3-4 persons"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "creamy-alfredo-pasta",
+      "name": "Creamy Parmesan Alfredo Pasta",
+      "category": "Pizzas & Pastas",
+      "categoryId": "pizzas-pastas",
+      "is_veg": true,
+      "rating": 4.7,
+      "calories": "560 kcal",
+      "prepTimeMins": 18,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "Al dente penne pasta tossed in a rich, velvety garlic parmesan cream sauce with sauteed broccoli, bell peppers, and fresh basil herbs.",
+      "tiers": [
+        {
+          "name": "Regular (Veg)",
+          "priceMonthly": 799,
+          "priceAnnualMonthly": 799,
+          "unit": "bowl"
+        },
+        {
+          "name": "Add Grilled Chicken",
+          "priceMonthly": 1049,
+          "priceAnnualMonthly": 1049,
+          "unit": "bowl"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "crispy-veggie-burger",
+      "name": "Crispy Veggie Crunch Burger",
+      "category": "Burgers & Wraps",
+      "categoryId": "burgers-wraps",
+      "is_veg": true,
+      "rating": 4.6,
+      "calories": "450 kcal",
+      "prepTimeMins": 15,
+      "allergens": [
+        "Gluten",
+        "Soy"
+      ],
+      "description": "Crispy spiced potato and vegetable patty with fresh iceberg lettuce, sliced tomatoes, gherkins, and tangy house secret dressing in a toasted brioche bun.",
+      "tiers": [
+        {
+          "name": "Single Burger",
+          "priceMonthly": 499,
+          "priceAnnualMonthly": 499,
+          "unit": "single"
+        },
+        {
+          "name": "Meal with Fries & Coke",
+          "priceMonthly": 749,
+          "priceAnnualMonthly": 749,
+          "unit": "combo"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "bbq-chicken-burger",
+      "name": "Smoky BBQ Bacon & Chicken Burger",
+      "category": "Burgers & Wraps",
+      "categoryId": "burgers-wraps",
+      "is_veg": false,
+      "rating": 4.9,
+      "calories": "620 kcal",
+      "prepTimeMins": 16,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "Tender flame-grilled chicken breast glazed in smoky hickory BBQ sauce, cheddar cheese slice, caramelized onions, and crisp lettuce.",
+      "tiers": [
+        {
+          "name": "Single Burger",
+          "priceMonthly": 649,
+          "priceAnnualMonthly": 649,
+          "unit": "single"
+        },
+        {
+          "name": "Double Patty Meal",
+          "priceMonthly": 949,
+          "priceAnnualMonthly": 949,
+          "unit": "combo"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "paneer-tikka-wrap",
+      "name": "Tandoori Paneer Tikka Wrap",
+      "category": "Burgers & Wraps",
+      "categoryId": "burgers-wraps",
+      "is_veg": true,
+      "rating": 4.7,
+      "calories": "480 kcal",
+      "prepTimeMins": 15,
+      "allergens": [
+        "Dairy",
+        "Gluten"
+      ],
+      "description": "Charcoal-grilled cottage cheese cubes tossed in spicy tandoori marinade with mint chutney, sliced onions, and rolled in a whole wheat tortilla.",
+      "tiers": [
+        {
+          "name": "Standard Wrap",
+          "priceMonthly": 549,
+          "priceAnnualMonthly": 549,
+          "unit": "wrap"
+        },
+        {
+          "name": "Jumbo Extra Cheese Wrap",
+          "priceMonthly": 699,
+          "priceAnnualMonthly": 699,
+          "unit": "wrap"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "chicken-dum-biryani",
+      "name": "Royal Hyderabadi Chicken Dum Biryani",
+      "category": "Biryanis & Rice Bowls",
+      "categoryId": "biryanis-meals",
+      "is_veg": false,
+      "rating": 5.0,
+      "calories": "750 kcal",
+      "prepTimeMins": 25,
+      "allergens": [
+        "Dairy"
+      ],
+      "description": "Our #1 Bestseller. Long-grain aromatic basmati rice slow-cooked on 'Dum' with tender marinated chicken pieces, caramelized onions, saffron, and rich spices. Served with creamy Mirchi Ka Salan and cooling raita.",
+      "tiers": [
+        {
+          "name": "Regular (Serves 1)",
+          "priceMonthly": 999,
+          "priceAnnualMonthly": 999,
+          "unit": "1 person"
+        },
+        {
+          "name": "Matka Pot (Serves 2)",
+          "priceMonthly": 1649,
+          "priceAnnualMonthly": 1649,
+          "unit": "2 persons"
+        },
+        {
+          "name": "Family Pack (Serves 4)",
+          "priceMonthly": 2899,
+          "priceAnnualMonthly": 2899,
+          "unit": "4 persons"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "royal-paneer-biryani",
+      "name": "Shahi Paneer Dum Biryani",
+      "category": "Biryanis & Rice Bowls",
+      "categoryId": "biryanis-meals",
+      "is_veg": true,
+      "rating": 4.8,
+      "calories": "680 kcal",
+      "prepTimeMins": 22,
+      "allergens": [
+        "Dairy",
+        "Nuts"
+      ],
+      "description": "Fresh soft paneer cubes marinated in yogurt and Mughlai spices, layered with fragrant saffron basmati rice, roasted cashews, and golden mint. Served with raita.",
+      "tiers": [
+        {
+          "name": "Regular (Serves 1)",
+          "priceMonthly": 879,
+          "priceAnnualMonthly": 879,
+          "unit": "1 person"
+        },
+        {
+          "name": "Matka Pot (Serves 2)",
+          "priceMonthly": 1499,
+          "priceAnnualMonthly": 1499,
+          "unit": "2 persons"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "butter-chicken-meal",
+      "name": "Delhi Butter Chicken with Garlic Naan",
+      "category": "Biryanis & Rice Bowls",
+      "categoryId": "biryanis-meals",
+      "is_veg": false,
+      "rating": 4.9,
+      "calories": "820 kcal",
+      "prepTimeMins": 20,
+      "allergens": [
+        "Dairy",
+        "Nuts",
+        "Gluten"
+      ],
+      "description": "Tandoori chicken tikka cooked in a creamy, velvety tomato butter gravy with subtle aromatic fenugreek. Served with 2 hot butter garlic naans and pickled onions.",
+      "tiers": [
+        {
+          "name": "Complete Meal Box",
+          "priceMonthly": 1099,
+          "priceAnnualMonthly": 1099,
+          "unit": "meal box"
+        },
+        {
+          "name": "Party Portion (Curry Only)",
+          "priceMonthly": 1549,
+          "priceAnnualMonthly": 1549,
+          "unit": "portion"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "dal-makhani-bowl",
+      "name": "Slow-Cooked Dal Makhani Rice Bowl",
+      "category": "Biryanis & Rice Bowls",
+      "categoryId": "biryanis-meals",
+      "is_veg": true,
+      "rating": 4.7,
+      "calories": "590 kcal",
+      "prepTimeMins": 15,
+      "allergens": [
+        "Dairy"
+      ],
+      "description": "Black lentils slow-cooked overnight for 16 hours with butter and cream, served alongside fragrant jeera basmati rice and fresh mint salad.",
+      "tiers": [
+        {
+          "name": "Regular Rice Bowl",
+          "priceMonthly": 749,
+          "priceAnnualMonthly": 749,
+          "unit": "bowl"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "avocado-protein-bowl",
+      "name": "Avocado & Quinoa Superfood Bowl",
+      "category": "Healthy Bowls & Salads",
+      "categoryId": "healthy-salads",
+      "is_veg": true,
+      "rating": 4.8,
+      "calories": "410 kcal",
+      "prepTimeMins": 12,
+      "allergens": [],
+      "description": "Fresh Haas avocado slices, organic tri-color quinoa, roasted chickpeas, cherry tomatoes, edamame, and lemon-tahini dressing.",
+      "tiers": [
+        {
+          "name": "Veg Clean Bowl",
+          "priceMonthly": 849,
+          "priceAnnualMonthly": 849,
+          "unit": "bowl"
+        },
+        {
+          "name": "Add Grilled Tofu / Paneer",
+          "priceMonthly": 999,
+          "priceAnnualMonthly": 999,
+          "unit": "bowl"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "greek-chicken-salad",
+      "name": "Mediterranean Grilled Chicken Salad",
+      "category": "Healthy Bowls & Salads",
+      "categoryId": "healthy-salads",
+      "is_veg": false,
+      "rating": 4.7,
+      "calories": "380 kcal",
+      "prepTimeMins": 12,
+      "allergens": [
+        "Dairy"
+      ],
+      "description": "Juicy herb-marinated grilled chicken breast, crisp romaine lettuce, Kalamata olives, diced cucumbers, feta cheese crumbles, and extra virgin olive oil vinaigrette.",
+      "tiers": [
+        {
+          "name": "Standard Salad",
+          "priceMonthly": 899,
+          "priceAnnualMonthly": 899,
+          "unit": "salad"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "stuffed-garlic-bread",
+      "name": "Cheesy Stuffed Garlic Breadsticks",
+      "category": "Sides & Appetizers",
+      "categoryId": "sides-appetizers",
+      "is_veg": true,
+      "rating": 4.9,
+      "calories": "420 kcal",
+      "prepTimeMins": 15,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "Freshly baked garlic breadsticks stuffed with oozing mozzarella cheese, sweet corn, and jalapenos, brushed with garlic herb butter. Served with cheesy jalapeno dip.",
+      "tiers": [
+        {
+          "name": "4 Pcs with Dip",
+          "priceMonthly": 419,
+          "priceAnnualMonthly": 419,
+          "unit": "4 pcs"
+        },
+        {
+          "name": "8 Pcs Party Size",
+          "priceMonthly": 699,
+          "priceAnnualMonthly": 699,
+          "unit": "8 pcs"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "loaded-cheese-fries",
+      "name": "Peri-Peri Loaded Cheese Fries",
+      "category": "Sides & Appetizers",
+      "categoryId": "sides-appetizers",
+      "is_veg": true,
+      "rating": 4.8,
+      "calories": "520 kcal",
+      "prepTimeMins": 14,
+      "allergens": [
+        "Dairy"
+      ],
+      "description": "Crispy golden french fries dusted with spicy African peri-peri seasoning, smothered with warm liquid cheddar cheese sauce and chopped spring onions.",
+      "tiers": [
+        {
+          "name": "Regular Box",
+          "priceMonthly": 379,
+          "priceAnnualMonthly": 379,
+          "unit": "box"
+        },
+        {
+          "name": "Large Box with Bacon / Chicken",
+          "priceMonthly": 579,
+          "priceAnnualMonthly": 579,
+          "unit": "box"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "peri-peri-wings",
+      "name": "Spicy Peri-Peri Chicken Wings",
+      "category": "Sides & Appetizers",
+      "categoryId": "sides-appetizers",
+      "is_veg": false,
+      "rating": 4.9,
+      "calories": "580 kcal",
+      "prepTimeMins": 18,
+      "allergens": [],
+      "description": "Juicy chicken wings deep-fried to golden perfection and tossed in fiery peri-peri glaze. Served with creamy garlic dip.",
+      "tiers": [
+        {
+          "name": "6 Pieces",
+          "priceMonthly": 579,
+          "priceAnnualMonthly": 579,
+          "unit": "6 pcs"
+        },
+        {
+          "name": "12 Pieces Party Pack",
+          "priceMonthly": 1049,
+          "priceAnnualMonthly": 1049,
+          "unit": "12 pcs"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "choco-lava-cake",
+      "name": "Molten Choco Lava Cake",
+      "category": "Desserts & Sweets",
+      "categoryId": "desserts",
+      "is_veg": true,
+      "rating": 5.0,
+      "calories": "390 kcal",
+      "prepTimeMins": 10,
+      "allergens": [
+        "Dairy",
+        "Gluten"
+      ],
+      "description": "Warm chocolate cake with a rich, decadent molten dark chocolate fudge center that flows out with the first spoon.",
+      "tiers": [
+        {
+          "name": "Single Cake",
+          "priceMonthly": 329,
+          "priceAnnualMonthly": 329,
+          "unit": "1 cake"
+        },
+        {
+          "name": "Twin Pack (2 Cakes)",
+          "priceMonthly": 579,
+          "priceAnnualMonthly": 579,
+          "unit": "2 cakes"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "red-velvet-pastry",
+      "name": "New York Red Velvet Pastry",
+      "category": "Desserts & Sweets",
+      "categoryId": "desserts",
+      "is_veg": true,
+      "rating": 4.7,
+      "calories": "340 kcal",
+      "prepTimeMins": 5,
+      "allergens": [
+        "Dairy",
+        "Gluten"
+      ],
+      "description": "Layers of moist cocoa red velvet sponge cake topped with light, tangy Philadelphia cream cheese frosting and white chocolate curls.",
+      "tiers": [
+        {
+          "name": "1 Slice",
+          "priceMonthly": 379,
+          "priceAnnualMonthly": 379,
+          "unit": "slice"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "gulab-jamun-sundae",
+      "name": "Warm Gulab Jamun Ice Cream Sundae",
+      "category": "Desserts & Sweets",
+      "categoryId": "desserts",
+      "is_veg": true,
+      "rating": 4.8,
+      "calories": "420 kcal",
+      "prepTimeMins": 8,
+      "allergens": [
+        "Dairy",
+        "Nuts"
+      ],
+      "description": "Two warm, syrup-soaked mawa gulab jamuns served over a scoop of premium vanilla bean ice cream and garnished with slivered pistachios.",
+      "tiers": [
+        {
+          "name": "Single Bowl",
+          "priceMonthly": 349,
+          "priceAnnualMonthly": 349,
+          "unit": "bowl"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "iced-cold-coffee",
+      "name": "Signature Iced Cold Coffee",
+      "category": "Shakes & Beverages",
+      "categoryId": "beverages",
+      "is_veg": true,
+      "rating": 4.8,
+      "calories": "220 kcal",
+      "prepTimeMins": 5,
+      "allergens": [
+        "Dairy"
+      ],
+      "description": "Brewed with 100% Arabica coffee beans, blended with cold milk, chocolate drizzle, and vanilla ice cream for a thick, refreshing beverage.",
+      "tiers": [
+        {
+          "name": "Regular (350ml)",
+          "priceMonthly": 289,
+          "priceAnnualMonthly": 289,
+          "unit": "350ml"
+        },
+        {
+          "name": "Large (500ml)",
+          "priceMonthly": 419,
+          "priceAnnualMonthly": 419,
+          "unit": "500ml"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "belgian-chocolate-shake",
+      "name": "Thick Belgian Chocolate Milkshake",
+      "category": "Shakes & Beverages",
+      "categoryId": "beverages",
+      "is_veg": true,
+      "rating": 4.9,
+      "calories": "480 kcal",
+      "prepTimeMins": 6,
+      "allergens": [
+        "Dairy"
+      ],
+      "description": "Ultra-thick gourmet shake made with melted dark Belgian chocolate, fudge sauce, vanilla ice cream, and topped with chocolate sprinkles.",
+      "tiers": [
+        {
+          "name": "Regular (350ml)",
+          "priceMonthly": 379,
+          "priceAnnualMonthly": 379,
+          "unit": "350ml"
+        },
+        {
+          "name": "Large (500ml)",
+          "priceMonthly": 499,
+          "priceAnnualMonthly": 499,
+          "unit": "500ml"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "fresh-mint-lemonade",
+      "name": "Fresh Mint & Masala Lemonade",
+      "category": "Shakes & Beverages",
+      "categoryId": "beverages",
+      "is_veg": true,
+      "rating": 4.6,
+      "calories": "90 kcal",
+      "prepTimeMins": 5,
+      "allergens": [],
+      "description": "Freshly squeezed lemon juice with crushed garden mint leaves, cumin, black salt, and sparkling chilled soda for instant refreshment.",
+      "tiers": [
+        {
+          "name": "Regular (350ml)",
+          "priceMonthly": 249,
+          "priceAnnualMonthly": 249,
+          "unit": "350ml"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "pizza-wings-combo",
+      "name": "Game Night Combo (Pizza + Wings + Coke)",
+      "category": "Value Combos & Deals",
+      "categoryId": "combos",
+      "is_veg": false,
+      "rating": 5.0,
+      "calories": "1450 kcal",
+      "prepTimeMins": 25,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "1 Medium Pizza of your choice + 6 Pcs Peri-Peri Wings + 2 Iced Cold Coffees or Cokes. Save 25% compared to individual items.",
+      "tiers": [
+        {
+          "name": "Combo for 2",
+          "priceMonthly": 1899,
+          "priceAnnualMonthly": 1899,
+          "unit": "combo"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "biryani-starter-combo",
+      "name": "Biryani Feast Combo (Biryani + Garlic Bread + Lava Cake)",
+      "category": "Value Combos & Deals",
+      "categoryId": "combos",
+      "is_veg": false,
+      "rating": 4.9,
+      "calories": "1380 kcal",
+      "prepTimeMins": 25,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "1 Hyderabadi Chicken Dum Biryani (Serves 1) + 4 Pcs Cheesy Stuffed Garlic Breadsticks + 1 Choco Lava Cake. Perfect solo feast.",
+      "tiers": [
+        {
+          "name": "Solo Feast Combo",
+          "priceMonthly": 1449,
+          "priceAnnualMonthly": 1449,
+          "unit": "combo"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "burger-fries-shake-combo",
+      "name": "All-American Combo (Burger + Loaded Fries + Shake)",
+      "category": "Value Combos & Deals",
+      "categoryId": "combos",
+      "is_veg": false,
+      "rating": 4.9,
+      "calories": "1290 kcal",
+      "prepTimeMins": 20,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "1 Smoky BBQ Chicken Burger + 1 Regular Loaded Cheese Fries + 1 Belgian Chocolate Shake.",
+      "tiers": [
+        {
+          "name": "Complete Meal Deal",
+          "priceMonthly": 1299,
+          "priceAnnualMonthly": 1299,
+          "unit": "combo"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "peri-peri-chicken-pasta",
+      "name": "Peri-Peri Chicken Pasta",
+      "category": "Pizzas & Pastas",
+      "categoryId": "pizzas-pastas",
+      "is_veg": false,
+      "rating": 4.6,
+      "calories": "620 kcal",
+      "prepTimeMins": 18,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "Creamy penne pasta tossed with fire-grilled peri-peri chicken strips, roasted peppers, parmesan, and a hint of smoky chilli oil.",
+      "tiers": [
+        {
+          "name": "Regular (Veg Base)",
+          "priceMonthly": 879,
+          "priceAnnualMonthly": 879,
+          "unit": "bowl"
+        },
+        {
+          "name": "Add Extra Chicken",
+          "priceMonthly": 1099,
+          "priceAnnualMonthly": 1099,
+          "unit": "bowl"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "aloo-tikki-street-burger",
+      "name": "Delhi Street Style Aloo Tikki Burger",
+      "category": "Burgers & Wraps",
+      "categoryId": "burgers-wraps",
+      "is_veg": true,
+      "rating": 4.6,
+      "calories": "430 kcal",
+      "prepTimeMins": 12,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "Crispy spiced aloo tikki patty, tangy green chutney, curd mayo, onions, and chaat masala in a soft sesame bun. Street food ke dum ke saath.",
+      "tiers": [
+        {
+          "name": "Single Burger",
+          "priceMonthly": 419,
+          "priceAnnualMonthly": 419,
+          "unit": "single"
+        },
+        {
+          "name": "Meal with Fries & Coke",
+          "priceMonthly": 649,
+          "priceAnnualMonthly": 649,
+          "unit": "combo"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "egg-dum-biryani",
+      "name": "Masala Egg Dum Biryani",
+      "category": "Biryanis & Rice Bowls",
+      "categoryId": "biryanis-meals",
+      "is_veg": false,
+      "rating": 4.7,
+      "calories": "620 kcal",
+      "prepTimeMins": 20,
+      "allergens": [
+        "Dairy"
+      ],
+      "description": "Boiled desi eggs sautéed in spicy masala, layered with saffron basmati rice and slow-cooked on dum. Served with salan and raita.",
+      "tiers": [
+        {
+          "name": "Regular (Serves 1)",
+          "priceMonthly": 849,
+          "priceAnnualMonthly": 849,
+          "unit": "1 person"
+        },
+        {
+          "name": "Family Pack (Serves 4)",
+          "priceMonthly": 2499,
+          "priceAnnualMonthly": 2499,
+          "unit": "4 persons"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "grilled-tofu-buddha-bowl",
+      "name": "Grilled Tofu Buddha Bowl",
+      "category": "Healthy Bowls & Salads",
+      "categoryId": "healthy-salads",
+      "is_veg": true,
+      "rating": 4.6,
+      "calories": "360 kcal",
+      "prepTimeMins": 13,
+      "allergens": [
+        "Soy",
+        "Sesame"
+      ],
+      "description": "Char-grilled tofu, brown rice, sautéed greens, pickled carrots, edamame, and a creamy sesame tahini dressing. Meal-prep friendly and protein loaded.",
+      "tiers": [
+        {
+          "name": "Veg Clean Bowl",
+          "priceMonthly": 799,
+          "priceAnnualMonthly": 799,
+          "unit": "bowl"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "honey-chilli-chicken",
+      "name": "Crispy Honey Chilli Chicken",
+      "category": "Sides & Appetizers",
+      "categoryId": "sides-appetizers",
+      "is_veg": false,
+      "rating": 4.8,
+      "calories": "540 kcal",
+      "prepTimeMins": 16,
+      "allergens": [
+        "Soy"
+      ],
+      "description": "Golden fried chicken chunks tossed in a glossy sweet-spicy honey chilli glaze with crunchy bell peppers and toasted sesame.",
+      "tiers": [
+        {
+          "name": "Regular Box",
+          "priceMonthly": 649,
+          "priceAnnualMonthly": 649,
+          "unit": "box"
+        },
+        {
+          "name": "Large Party Box",
+          "priceMonthly": 1099,
+          "priceAnnualMonthly": 1099,
+          "unit": "box"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "kesar-pista-kulfi",
+      "name": "Kesar Pista Kulfi",
+      "category": "Desserts & Sweets",
+      "categoryId": "desserts",
+      "is_veg": true,
+      "rating": 4.9,
+      "calories": "290 kcal",
+      "prepTimeMins": 3,
+      "allergens": [
+        "Dairy",
+        "Nuts"
+      ],
+      "description": "Traditional slow-set malai kulfi flavoured with saffron strands and topped with roasted pistachio slivers. Rich, creamy, and authentic Indian indulgence.",
+      "tiers": [
+        {
+          "name": "Single Kulfi",
+          "priceMonthly": 289,
+          "priceAnnualMonthly": 289,
+          "unit": "stick"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "aam-panna-cooler",
+      "name": "Raw Mango Aam Panna Cooler",
+      "category": "Shakes & Beverages",
+      "categoryId": "beverages",
+      "is_veg": true,
+      "rating": 4.6,
+      "calories": "110 kcal",
+      "prepTimeMins": 4,
+      "allergens": [],
+      "description": "Refreshing raw mango pulp blended with roasted cumin, black salt, mint, and chilled sparkling water. Garmi ka khatta-meetha ilaaj.",
+      "tiers": [
+        {
+          "name": "Regular (350ml)",
+          "priceMonthly": 199,
+          "priceAnnualMonthly": 199,
+          "unit": "350ml"
+        },
+        {
+          "name": "Large (500ml)",
+          "priceMonthly": 329,
+          "priceAnnualMonthly": 329,
+          "unit": "500ml"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "student-saver-combo",
+      "name": "Student Saver Combo (Burger + Fries + Cooler)",
+      "category": "Value Combos & Deals",
+      "categoryId": "combos",
+      "is_veg": true,
+      "rating": 4.7,
+      "calories": "980 kcal",
+      "prepTimeMins": 18,
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "description": "1 Aloo Tikki Burger + 1 Regular Peri-Peri Loaded Fries + 1 Aam Panna Cooler. Budget ke hisaab se full meal — saves 20%.",
+      "tiers": [
+        {
+          "name": "Complete Meal Deal",
+          "priceMonthly": 1099,
+          "priceAnnualMonthly": 1099,
+          "unit": "combo"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+    }
+  ]
+}

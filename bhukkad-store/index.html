@@ -1,0 +1,512 @@
+<!-- Bhukkad Home -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bhukkad - Modern Desi Chic Food Delivery</title>
+<link rel="icon" type="image/png" href="assets/logo.png"/>
+<link rel="shortcut icon" href="favicon.ico"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "tertiary": "#785900",
+                "error-container": "#ffdad6",
+                "on-secondary-fixed": "#00201a",
+                "surface-variant": "#e5e2e1",
+                "surface-tint": "#b02f00",
+                "outline": "#907067",
+                "surface-container-high": "#eae7e7",
+                "on-tertiary": "#ffffff",
+                "surface-bright": "#fcf9f8",
+                "on-error": "#ffffff",
+                "background": "#fcf9f8",
+                "surface-dim": "#dcd9d9",
+                "inverse-on-surface": "#f3f0ef",
+                "on-tertiary-fixed-variant": "#5b4300",
+                "on-error-container": "#93000a",
+                "inverse-primary": "#ffb5a0",
+                "primary-container": "#ff5722",
+                "secondary-container": "#68fadd",
+                "secondary-fixed": "#68fadd",
+                "tertiary-fixed-dim": "#fabd00",
+                "inverse-surface": "#303030",
+                "on-tertiary-fixed": "#261a00",
+                "surface-container-lowest": "#ffffff",
+                "tertiary-container": "#b78a00",
+                "error": "#ba1a1a",
+                "outline-variant": "#e4beb4",
+                "secondary": "#006b5c",
+                "on-primary-fixed-variant": "#862200",
+                "tertiary-fixed": "#ffdf9e",
+                "surface-container": "#f0eded",
+                "on-primary-container": "#541200",
+                "on-secondary-container": "#007261",
+                "on-background": "#1b1c1c",
+                "surface-container-highest": "#e5e2e1",
+                "primary-fixed-dim": "#ffb5a0",
+                "on-surface": "#1b1c1c",
+                "primary": "#b02f00",
+                "on-secondary-fixed-variant": "#005145",
+                "on-primary": "#ffffff",
+                "on-surface-variant": "#5b4039",
+                "surface-container-low": "#f6f3f2",
+                "primary-fixed": "#ffdbd1",
+                "on-secondary": "#ffffff",
+                "surface": "#fcf9f8",
+                "on-tertiary-container": "#372700",
+                "on-primary-fixed": "#3b0900",
+                "secondary-fixed-dim": "#44ddc1"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "margin-mobile": "16px",
+                "xl": "32px",
+                "md": "16px",
+                "lg": "24px",
+                "2xl": "48px",
+                "sm": "12px",
+                "base": "8px",
+                "margin-desktop": "64px",
+                "gutter": "16px",
+                "xs": "4px"
+        },
+        "fontFamily": {
+                "headline-md": ["Outfit", "sans-serif"],
+                "headline-lg": ["Outfit", "sans-serif"],
+                "body-md": ["Inter", "sans-serif"],
+                "label-sm": ["Inter", "sans-serif"],
+                "headline-lg-mobile": ["Outfit", "sans-serif"],
+                "body-lg": ["Inter", "sans-serif"],
+                "label-lg": ["Inter", "sans-serif"],
+                "display-lg": ["Outfit", "sans-serif"]
+        },
+        "fontSize": {
+                "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                "headline-lg-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+        }
+      },
+    },
+  }
+</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+  @keyframes minimalPop {
+    0% {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+
+<!-- Minimalist Splash Screen -->
+<div id="bhukkadSplashScreen" class="fixed inset-0 z-[9999] bg-white flex items-center justify-center select-none transition-opacity duration-600 ease-out cursor-pointer">
+  <div class="flex flex-col items-center gap-6 animate-[minimalPop_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards]">
+    <img src="assets/logo.png" alt="Bhukkad" class="w-24 h-24 sm:w-28 sm:h-28 object-contain rounded-2xl drop-shadow-sm"/>
+    <!-- Saffron Loading Line -->
+    <div class="w-36 sm:w-44 h-1 bg-[#f0e6e2] rounded-full overflow-hidden">
+      <div id="splashProgressBar" class="h-full bg-gradient-to-r from-primary to-[#ff7a00] rounded-full w-0 transition-all duration-[2200ms] ease-out"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TopNavBar (Web) -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-3 md:px-margin-desktop h-16 md:h-20 max-w-[1200px] mx-auto bg-surface/80 dark:bg-surface/80 backdrop-blur-md shadow-sm">
+<a href="index.html" class="flex items-center flex-shrink-0 text-decoration-none group" title="Bhukkad Home">
+<img alt="Bhukkad Logo" class="h-9 w-9 md:h-10 md:w-10 object-contain rounded-md group-hover:scale-105 transition-transform" src="assets/logo.png"/>
+</a>
+<div class="flex-1 max-w-xl mx-2 md:mx-lg relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px] md:text-[24px]" data-icon="search">search</span>
+</div>
+<input id="searchInput" class="w-full bg-[#F1F1F1] text-on-surface rounded-full py-1.5 md:py-2 pl-9 md:pl-10 pr-3 md:pr-4 focus:outline-none focus:ring-2 focus:ring-primary-container border-none text-xs md:text-sm font-body-md shadow-[0_4px_12px_rgba(0,0,0,0.04)] transition-shadow" placeholder="Search dishes, restaurants or cuisines..." type="text"/>
+</div>
+<div class="flex items-center gap-1.5 md:gap-lg">
+<button id="btnLocationSelect" class="flex items-center gap-1 md:gap-1.5 text-on-surface-variant hover:text-primary transition-colors duration-200 bg-surface-container/70 hover:bg-surface-container px-2 md:px-3.5 py-1.5 rounded-full border border-outline-variant/30 text-xs font-semibold cursor-pointer">
+<span class="material-symbols-outlined text-primary text-[16px] md:text-[18px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span id="navLocationLabel" class="max-w-[70px] md:max-w-none truncate">Indiranagar</span>
+<span class="material-symbols-outlined text-[14px] md:text-[16px] text-on-surface-variant">expand_more</span>
+</button>
+<a href="menu.html" class="hidden md:inline font-label-lg text-label-lg font-semibold text-primary text-decoration-none">Menu</a>
+<button class="open-voice-assistant md:hidden flex items-center justify-center cursor-pointer bg-transparent border-none text-on-surface-variant p-1" aria-label="Voice AI">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+<a href="checkout.html" class="p-1.5 md:p-2 bg-surface-container rounded-full text-on-surface hover:bg-surface-variant transition-colors relative flex items-center justify-center text-decoration-none">
+<span class="material-symbols-outlined text-[20px] md:text-[24px]" data-icon="shopping_cart">shopping_cart</span>
+<span id="navCartBadge" class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+</a>
+</div>
+</header>
+
+<!-- Main Content -->
+<main class="pt-20 pb-28 md:pb-12">
+<!-- Hero Section -->
+<section class="relative w-full h-[60vh] min-h-[400px] max-h-[600px] flex items-center justify-center px-margin-mobile md:px-margin-desktop overflow-hidden">
+<!-- Background Image -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="A vibrant Indian Thali" style="background-image: url('https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=1600&auto=format&fit=crop&q=80')"></div>
+<div class="absolute inset-0 bg-black/50"></div>
+</div>
+<!-- Hero Content -->
+<div class="relative z-10 text-center text-white max-w-3xl mx-auto flex flex-col items-center">
+<h1 class="font-display-lg text-display-lg font-black mb-xs tracking-tight drop-shadow-lg">Aaj Kya Khane Ka Mood Hai?</h1>
+<p class="font-body-lg text-body-lg font-medium mb-lg drop-shadow-md text-white/90">Garama-garam chef-crafted khana, direct aapke darwaaze tak in 30 mins.</p>
+<!-- Mobile Search Bar -->
+<div class="w-full max-w-md relative md:hidden mt-md">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</div>
+<input id="mobileSearchInput" class="w-full bg-white text-on-surface rounded-full py-3.5 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-primary-container border-none text-sm shadow-lg" placeholder="Dishes, cuisines search karo..." type="text"/>
+</div>
+<div class="mt-6 flex gap-3">
+  <a href="menu.html" class="bg-primary-container hover:bg-primary text-white font-label-lg font-bold px-6 py-3 rounded-full shadow-lg transition-all text-decoration-none">
+    Menu Dekho
+  </a>
+</div>
+</div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-2xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+<div class="flex items-center justify-between mb-lg">
+  <h2 class="font-headline-lg text-headline-lg font-bold">Popular Categories</h2>
+  <a href="menu.html" class="text-sm font-bold text-primary hover:underline">Sabhi Dekho ➔</a>
+</div>
+<div class="flex overflow-x-auto hide-scrollbar gap-lg pb-md snap-x">
+<!-- Category Item 1: Pizza -->
+<a href="menu.html?cat=pizzas-pastas" class="flex flex-col items-center min-w-[100px] snap-start cursor-pointer group text-decoration-none">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-2 shadow-sm group-hover:shadow-md transition-shadow border-2 border-transparent group-hover:border-primary">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&auto=format&fit=crop&q=80" alt="Pizza"/>
+</div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface group-hover:text-primary transition-colors">Pizza</span>
+</a>
+<!-- Category Item 2: Burgers -->
+<a href="menu.html?cat=burgers-wraps" class="flex flex-col items-center min-w-[100px] snap-start cursor-pointer group text-decoration-none">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-2 shadow-sm group-hover:shadow-md transition-shadow border-2 border-transparent group-hover:border-primary">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop&q=80" alt="Burgers"/>
+</div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface group-hover:text-primary transition-colors">Burgers</span>
+</a>
+<!-- Category Item 3: Biryani -->
+<a href="menu.html?cat=biryanis-meals" class="flex flex-col items-center min-w-[100px] snap-start cursor-pointer group text-decoration-none">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-2 shadow-sm group-hover:shadow-md transition-shadow border-2 border-transparent group-hover:border-primary">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80" alt="Biryani"/>
+</div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface group-hover:text-primary transition-colors">Biryani</span>
+</a>
+<!-- Category Item 4: Appetizers & Sides -->
+<a href="menu.html?cat=sides-appetizers" class="flex flex-col items-center min-w-[100px] snap-start cursor-pointer group text-decoration-none">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-2 shadow-sm group-hover:shadow-md transition-shadow border-2 border-transparent group-hover:border-primary">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&auto=format&fit=crop&q=80" alt="Sides & Wings"/>
+</div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface group-hover:text-primary transition-colors">Sides</span>
+</a>
+<!-- Category Item 5: Salads -->
+<a href="menu.html?cat=healthy-salads" class="flex flex-col items-center min-w-[100px] snap-start cursor-pointer group text-decoration-none">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-2 shadow-sm group-hover:shadow-md transition-shadow border-2 border-transparent group-hover:border-primary">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop&q=80" alt="Healthy Salads"/>
+</div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface group-hover:text-primary transition-colors">Salads</span>
+</a>
+<!-- Category Item 6: Desserts -->
+<a href="menu.html?cat=desserts" class="flex flex-col items-center min-w-[100px] snap-start cursor-pointer group text-decoration-none">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-2 shadow-sm group-hover:shadow-md transition-shadow border-2 border-transparent group-hover:border-primary">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&auto=format&fit=crop&q=80" alt="Desserts"/>
+</div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface group-hover:text-primary transition-colors">Desserts</span>
+</a>
+<!-- Category Item 7: Beverages -->
+<a href="menu.html?cat=beverages" class="flex flex-col items-center min-w-[100px] snap-start cursor-pointer group text-decoration-none">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-2 shadow-sm group-hover:shadow-md transition-shadow border-2 border-transparent group-hover:border-primary">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&auto=format&fit=crop&q=80" alt="Beverages"/>
+</div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface group-hover:text-primary transition-colors">Beverages</span>
+</a>
+<!-- Category Item 8: Combos -->
+<a href="menu.html?cat=combos" class="flex flex-col items-center min-w-[100px] snap-start cursor-pointer group text-decoration-none">
+<div class="w-20 h-20 rounded-full overflow-hidden mb-2 shadow-sm group-hover:shadow-md transition-shadow border-2 border-transparent group-hover:border-primary">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&auto=format&fit=crop&q=80" alt="Combos"/>
+</div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface group-hover:text-primary transition-colors">Combos</span>
+</a>
+</div>
+</section>
+
+<!-- Popular Restaurants / Kitchens -->
+<section class="py-lg px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+  <h2 class="font-headline-lg text-headline-lg font-bold mb-md">Popular Cloud Kitchens</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+    <!-- Restaurant 1: Mastani Biryani -->
+    <a href="menu.html" class="bg-surface-container-lowest rounded-2xl p-md border border-surface-variant shadow-sm hover:shadow-md transition-all flex gap-md text-decoration-none group">
+      <div class="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80" alt="Mastani Biryani"/>
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="font-headline-md text-lg font-bold text-on-surface group-hover:text-primary transition-colors">Mastani Biryani</h3>
+            <span class="text-xs font-bold bg-secondary text-white px-2 py-0.5 rounded-md">4.8 ⭐</span>
+          </div>
+          <p class="text-xs text-on-surface-variant">Hyderabadi, North Indian &bull; 35 mins</p>
+          <p class="text-xs text-on-surface italic mt-2">"Slow-cooked authentic Awadhi aur Hyderabadi dum biryani, har bite mein dumdar swaad."</p>
+        </div>
+        <div class="text-xs font-bold text-primary flex items-center gap-1">
+          <span>Menu Dekho</span>
+          <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Restaurant 2: The Pizza & Pasta Co -->
+    <a href="menu.html?cat=pizzas-pastas" class="bg-surface-container-lowest rounded-2xl p-md border border-surface-variant shadow-sm hover:shadow-md transition-all flex gap-md text-decoration-none group">
+      <div class="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80" alt="The Pizza Co"/>
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="font-headline-md text-lg font-bold text-on-surface group-hover:text-primary transition-colors">The Pizza &amp; Pasta Co</h3>
+            <span class="text-xs font-bold bg-secondary text-white px-2 py-0.5 rounded-md">4.9 ⭐</span>
+          </div>
+          <p class="text-xs text-on-surface-variant">Woodfired Pizzas, Pastas &bull; 25 mins</p>
+          <p class="text-xs text-on-surface italic mt-2">"Woodfired crust, molten mozzarella aur fresh toppings ka perfect blend."</p>
+        </div>
+        <div class="text-xs font-bold text-primary flex items-center gap-1">
+          <span>Menu Dekho</span>
+          <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- BottomNavBar (Mobile) -->
+<nav id="bhukkadMobileNav" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-white dark:bg-[#181311] border-t border-outline-variant/30 md:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.12)] rounded-t-2xl">
+<a href="index.html" class="flex flex-col items-center justify-center text-primary font-bold px-3 py-1 rounded-lg text-decoration-none">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[11px] font-medium">Home</span>
+</a>
+<a href="menu.html" class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 rounded-lg text-decoration-none">
+<span class="material-symbols-outlined text-[22px]">restaurant_menu</span>
+<span class="text-[11px] font-medium">Menu</span>
+</a>
+<button class="open-voice-assistant flex flex-col items-center justify-center relative px-2 text-decoration-none bg-transparent border-none cursor-pointer">
+<!-- Voice AI Assistant Button -->
+<div class="absolute -top-7 bg-primary-container text-white p-3.5 rounded-full shadow-lg border-4 border-white dark:border-[#181311] flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">mic</span>
+</div>
+<span class="text-[11px] font-bold text-primary mt-6">Voice AI</span>
+</button>
+<a href="checkout.html" class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 rounded-lg relative text-decoration-none">
+<span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+<span class="text-[11px] font-medium">Cart</span>
+<span id="bottomCartBadge" class="absolute top-1 right-2 bg-primary text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+</a>
+</nav>
+
+<!-- Location Selection Modal -->
+<div id="locationModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+  <div class="bg-surface-container-lowest rounded-3xl p-6 border border-outline-variant/40 shadow-2xl max-w-md w-full animate-[fadeIn_0.2s_ease-out]">
+    <div class="flex items-center justify-between pb-3 border-b border-outline-variant/20 mb-4">
+      <h3 class="font-headline-md text-lg font-bold text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[22px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+        <span>Select Delivery Location</span>
+      </h3>
+      <button id="btnCloseLocationModal" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    </div>
+
+    <!-- Custom Search / Input -->
+    <div class="relative mb-4">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+        <span class="material-symbols-outlined text-[18px]">search</span>
+      </div>
+      <input id="inputCustomLocation" type="text" placeholder="Type your area or society..." class="w-full bg-surface-container-low text-on-surface text-xs rounded-xl pl-9 pr-3 py-3 border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-primary-container"/>
+    </div>
+
+    <!-- Popular Localities -->
+    <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-2">Popular Areas in Bengaluru</p>
+    <div class="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+      <button class="loc-option w-full text-left p-3 rounded-2xl border border-outline-variant/20 hover:border-primary hover:bg-primary/5 flex items-center justify-between transition-all" data-loc="Indiranagar, Bengaluru">
+        <div>
+          <div class="font-bold text-xs text-on-surface">Indiranagar</div>
+          <div class="text-[11px] text-on-surface-variant">100 Feet Rd, 12th Main, HAL 2nd Stage</div>
+        </div>
+        <span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+      </button>
+
+      <button class="loc-option w-full text-left p-3 rounded-2xl border border-outline-variant/20 hover:border-primary hover:bg-primary/5 flex items-center justify-between transition-all" data-loc="Koramangala, Bengaluru">
+        <div>
+          <div class="font-bold text-xs text-on-surface">Koramangala</div>
+          <div class="text-[11px] text-on-surface-variant">4th Block, 5th Block, Sony World Signal</div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant text-[18px]">chevron_right</span>
+      </button>
+
+      <button class="loc-option w-full text-left p-3 rounded-2xl border border-outline-variant/20 hover:border-primary hover:bg-primary/5 flex items-center justify-between transition-all" data-loc="HSR Layout, Bengaluru">
+        <div>
+          <div class="font-bold text-xs text-on-surface">HSR Layout</div>
+          <div class="text-[11px] text-on-surface-variant">Sector 1, Sector 2, 27th Main</div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant text-[18px]">chevron_right</span>
+      </button>
+
+      <button class="loc-option w-full text-left p-3 rounded-2xl border border-outline-variant/20 hover:border-primary hover:bg-primary/5 flex items-center justify-between transition-all" data-loc="Whitefield, Bengaluru">
+        <div>
+          <div class="font-bold text-xs text-on-surface">Whitefield</div>
+          <div class="text-[11px] text-on-surface-variant">ITPL Main Rd, EPIP Zone</div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant text-[18px]">chevron_right</span>
+      </button>
+
+      <button class="loc-option w-full text-left p-3 rounded-2xl border border-outline-variant/20 hover:border-primary hover:bg-primary/5 flex items-center justify-between transition-all" data-loc="Jayanagar, Bengaluru">
+        <div>
+          <div class="font-bold text-xs text-on-surface">Jayanagar</div>
+          <div class="text-[11px] text-on-surface-variant">4th Block, 9th Block, South End Circle</div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant text-[18px]">chevron_right</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { computeBill, getLocation, setLocation } from "./assets/cart-state.js";
+  import "./assets/voice-modal.js";
+
+  function syncLocation() {
+    const loc = getLocation();
+    const lbl = document.getElementById("navLocationLabel");
+    if (lbl) lbl.textContent = loc;
+  }
+
+  function syncBadges() {
+    const bill = computeBill();
+    const navB = document.getElementById("navCartBadge");
+    const btmB = document.getElementById("bottomCartBadge");
+    if (navB) {
+      navB.textContent = bill.count;
+      navB.classList.toggle("hidden", bill.count <= 0);
+    }
+    if (btmB) {
+      btmB.textContent = bill.count;
+      btmB.classList.toggle("hidden", bill.count <= 0);
+    }
+  }
+
+  // Location Modal logic
+  const locBtn = document.getElementById("btnLocationSelect");
+  const locModal = document.getElementById("locationModal");
+  const closeLocBtn = document.getElementById("btnCloseLocationModal");
+  const customLocIn = document.getElementById("inputCustomLocation");
+
+  if (locBtn && locModal) {
+    locBtn.addEventListener("click", () => locModal.classList.remove("hidden"));
+  }
+  if (closeLocBtn && locModal) {
+    closeLocBtn.addEventListener("click", () => locModal.classList.add("hidden"));
+  }
+  if (locModal) {
+    locModal.addEventListener("click", (e) => {
+      if (e.target === locModal) locModal.classList.add("hidden");
+    });
+  }
+
+  document.querySelectorAll(".loc-option").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const selected = btn.getAttribute("data-loc");
+      setLocation(selected);
+      if (locModal) locModal.classList.add("hidden");
+    });
+  });
+
+  if (customLocIn) {
+    customLocIn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && customLocIn.value.trim()) {
+        setLocation(customLocIn.value.trim());
+        if (locModal) locModal.classList.add("hidden");
+      }
+    });
+  }
+
+  const sIn = document.getElementById("searchInput");
+  if (sIn) {
+    sIn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && sIn.value.trim()) {
+        window.location.href = `menu.html?q=${encodeURIComponent(sIn.value.trim())}`;
+      }
+    });
+  }
+
+  const mIn = document.getElementById("mobileSearchInput");
+  if (mIn) {
+    mIn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && mIn.value.trim()) {
+        window.location.href = `menu.html?q=${encodeURIComponent(mIn.value.trim())}`;
+      }
+    });
+  }
+
+  // Minimalist Splash Screen with Saffron Loading Line
+  const splash = document.getElementById("bhukkadSplashScreen");
+  const splashBar = document.getElementById("splashProgressBar");
+  if (splash) {
+    setTimeout(() => {
+      if (splashBar) splashBar.style.width = "100%";
+    }, 70);
+
+    const dismissSplash = () => {
+      splash.style.opacity = "0";
+      splash.style.pointerEvents = "none";
+      setTimeout(() => splash.remove(), 600);
+    };
+
+    const splashTimer = setTimeout(dismissSplash, 2500);
+    splash.addEventListener("click", () => {
+      clearTimeout(splashTimer);
+      dismissSplash();
+    });
+  }
+
+  window.addEventListener("bhukkad:cart-change", syncBadges);
+  window.addEventListener("bhukkad:location-change", syncLocation);
+  syncBadges();
+  syncLocation();
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bhukkad Voice AI - Real-Time Food Delivery Assistant</title>
+  <link rel="icon" href="../bhukkad-store/assets/favicon.svg" />
+  <link rel="stylesheet" href="studio.css" />
+  <script src="runtime-config.js"></script>
+  <script src="studio.js" defer></script>
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header class="studio-nav">
+    <div class="brand-container">
+      <div class="brand-logo-badge">🍕</div>
+      <div class="brand-title">BHUKKAD <span style="color:var(--cyan);font-weight:400;">VOICE AI</span></div>
+      <span class="brand-pill">Food Delivery Edition</span>
+    </div>
+    <div class="nav-actions">
+      <div id="wsBadge" class="ws-status-badge">
+        <span class="ws-dot"></span>
+        <span id="wsStatusText">WebSocket: Connecting...</span>
+      </div>
+      <a href="../bhukkad-store/index.html" class="btn-ghost" style="text-decoration:none;">🛵 Food Store</a>
+    </div>
+  </header>
+
+  <!-- Tab Bar -->
+  <div class="tabs-container">
+    <nav class="tab-bar">
+      <button class="tab-btn active" data-target="tabAgent">🎙️ Conversational Chef</button>
+      <button class="tab-btn" data-target="tabTts">⚡ Lightning Food TTS</button>
+      <button class="tab-btn" data-target="tabRag">📚 Food Knowledge Base</button>
+      <button class="tab-btn" data-target="tabTools">🛠️ Ordering Tools</button>
+      <button class="tab-btn" data-target="tabMetrics">📊 Telemetry</button>
+    </nav>
+  </div>
+
+  <!-- Studio Main Content -->
+  <main class="studio-main">
+
+    <!-- TAB 1: Conversational Voice Call -->
+    <section id="tabAgent" class="tab-content active">
+      <div class="voice-call-grid">
+        <!-- Glowing Voice Orb Stage -->
+        <div class="glass-card orb-stage">
+          <div id="orbContainer" class="orb-container idle">
+            <div class="orb-ring orb-ring-1"></div>
+            <div class="orb-ring orb-ring-2"></div>
+            <div class="orb-ring orb-ring-3"></div>
+            <div id="orbCore" class="orb-core"></div>
+          </div>
+          <div id="orbStatusText" class="orb-status-text">Ready to Take Your Order</div>
+          <div id="orbSubtext" class="orb-subtext">Tap Start Call to order food, apply coupons, or check delivery</div>
+          <div class="call-btn-group">
+            <button id="btnCall" class="btn-mic-call">
+              <span>🎙️</span>
+              <span>Start Call</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Transcript & State Stream -->
+        <div class="glass-card transcript-card">
+          <div class="card-header-row">
+            <div class="card-title"><span>💬</span> Live Food Order Stream</div>
+            <div id="callTelemetryChip" class="telemetry-chip">⚡ Sub-600ms Full-Duplex</div>
+          </div>
+          <div id="transcriptFeed" class="stream-feed">
+            <div class="msg-bubble msg-agent">
+              👋 Welcome to <b>Bhukkad</b>! I'm your AI Voice Chef. Try saying: <i>"Add 1 Farmhouse Pizza & 1 Lava Cake to my cart and apply coupon BHUKKAD50"</i>!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Lightning TTS Playground -->
+    <section id="tabTts" class="tab-content">
+      <div class="tts-studio-grid">
+        <div class="glass-card">
+          <div class="card-header-row">
+            <div class="card-title"><span>⚡</span> Lightning Text-to-Speech</div>
+            <span id="ttsLatencyBadge" class="telemetry-chip">Ready to synthesize</span>
+          </div>
+          <textarea id="ttsInputText" class="tts-textarea" placeholder="Type or paste any text here to synthesize instant human-like speech..."></textarea>
+          
+          <div style="font-size:0.9rem;font-weight:600;margin-bottom:12px;">Choose Voice Avatar:</div>
+          <div id="voiceCardsGrid" class="voice-cards-grid"></div>
+
+          <div style="display:flex;gap:12px;align-items:center;">
+            <button id="btnGenerateTTS" class="btn-primary">⚡ Generate & Play Speech</button>
+            <button id="btnDownloadTTS" class="btn-ghost" disabled>📥 Download Audio</button>
+          </div>
+          <canvas id="ttsWaveformCanvas" class="waveform-canvas"></canvas>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-header-row">
+            <div class="card-title"><span>⚙️</span> Voice Settings</div>
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">
+            Smallest.ai-style ultra-low latency voice synthesis engine with pitch and speed modulation.
+          </p>
+          <label style="display:block;margin-bottom:14px;font-size:0.85rem;color:var(--text-muted);">
+            Playback Speed: <b>1.0x</b>
+            <input type="range" min="0.5" max="2.0" step="0.1" value="1.0" style="width:100%;margin-top:6px;" />
+          </label>
+          <label style="display:block;margin-bottom:14px;font-size:0.85rem;color:var(--text-muted);">
+            Sample Rate: <b>24kHz HD Audio</b>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Knowledge Base & RAG -->
+    <section id="tabRag" class="tab-content">
+      <div class="glass-card">
+        <div class="card-header-row">
+          <div class="card-title"><span>📚</span> Knowledge Base & Vector Ingestion</div>
+          <span id="ragDocCount" class="telemetry-chip">Loading index status...</span>
+        </div>
+
+        <!-- Drag & Drop Uploader -->
+        <div id="dropzone" class="dropzone-container">
+          <input type="file" id="ragFileInput" accept=".md,.txt" style="display:none;" />
+          <div class="dropzone-icon">📁</div>
+          <div class="dropzone-title">Drag & drop your Markdown or Text document here</div>
+          <div id="dropzoneDesc" class="dropzone-desc">Click or drop a file to automatically chunk, embed, and index into FAISS</div>
+        </div>
+
+        <!-- Test Query Search Bar -->
+        <div style="display:flex;gap:12px;margin-bottom:20px;">
+          <input id="ragQueryInput" type="text" placeholder="Test semantic retrieval (e.g., 'What are the SLA terms?')..." style="flex:1;padding:12px 16px;background:rgba(10,14,22,0.6);border:1px solid var(--border);border-radius:var(--radius-md);color:#fff;outline:none;" />
+          <button id="btnRagQuery" class="btn-primary">🔍 Query FAISS</button>
+        </div>
+
+        <div id="ragQueryResult" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Dynamic Tools -->
+    <section id="tabTools" class="tab-content">
+      <div class="glass-card">
+        <div class="card-header-row">
+          <div class="card-title"><span>🛠️</span> Dynamic Tool Registry</div>
+          <span class="telemetry-chip">Pluggable Function Calling</span>
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:20px;">
+          These tools are automatically exposed to the LLM. Toggle any tool on/off in real-time.
+        </p>
+        <div id="toolsGrid" class="tools-grid"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: Telemetry & Metrics -->
+    <section id="tabMetrics" class="tab-content">
+      <div class="glass-card">
+        <div class="card-header-row">
+          <div class="card-title"><span>📊</span> Real-Time Latency Telemetry Waterfall</div>
+          <span class="telemetry-chip">Sub-600ms Benchmark</span>
+        </div>
+        
+        <div style="font-size:2.2rem;font-weight:700;color:var(--cyan);margin:12px 0 20px;">
+          <span id="valTTFA">--</span> <span style="font-size:1rem;color:var(--text-muted);font-weight:400;">Time to First Audio (TTFA)</span>
+        </div>
+
+        <div class="waterfall-container">
+          <div class="waterfall-row">
+            <div class="waterfall-label">Speech Recognition</div>
+            <div class="waterfall-bar-track"><div id="barASR" class="waterfall-bar-fill" style="background:#3fb0c9;width:15%;"></div></div>
+            <div id="valASR" class="waterfall-val">--</div>
+          </div>
+          <div class="waterfall-row">
+            <div class="waterfall-label">LLM Token Stream</div>
+            <div class="waterfall-bar-track"><div id="barLLM" class="waterfall-bar-fill" style="background:#6e8bff;width:35%;"></div></div>
+            <div id="valLLM" class="waterfall-val">--</div>
+          </div>
+          <div class="waterfall-row">
+            <div class="waterfall-label">Sentence 1 TTS</div>
+            <div class="waterfall-bar-track"><div id="barTTS" class="waterfall-bar-fill" style="background:#d29922;width:30%;"></div></div>
+            <div id="valTTS" class="waterfall-val">--</div>
+          </div>
+          <div class="waterfall-row">
+            <div class="waterfall-label">FAISS RAG Search</div>
+            <div class="waterfall-bar-track"><div id="barRAG" class="waterfall-bar-fill" style="background:#8a2be2;width:10%;"></div></div>
+            <div id="valRAG" class="waterfall-val">--</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

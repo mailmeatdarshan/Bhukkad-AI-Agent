@@ -1,0 +1,599 @@
+<!-- Checkout & Tracking -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bhukkad Checkout &amp; Tracking</title>
+<link rel="icon" type="image/png" href="assets/logo.png"/>
+<link rel="shortcut icon" href="favicon.ico"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#785900",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#00201a",
+                      "surface-variant": "#e5e2e1",
+                      "surface-tint": "#b02f00",
+                      "outline": "#907067",
+                      "surface-container-high": "#eae7e7",
+                      "on-tertiary": "#ffffff",
+                      "surface-bright": "#fcf9f8",
+                      "on-error": "#ffffff",
+                      "background": "#fcf9f8",
+                      "surface-dim": "#dcd9d9",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-tertiary-fixed-variant": "#5b4300",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#ffb5a0",
+                      "primary-container": "#ff5722",
+                      "secondary-container": "#68fadd",
+                      "secondary-fixed": "#68fadd",
+                      "tertiary-fixed-dim": "#fabd00",
+                      "inverse-surface": "#303030",
+                      "on-tertiary-fixed": "#261a00",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-container": "#b78a00",
+                      "error": "#ba1a1a",
+                      "outline-variant": "#e4beb4",
+                      "secondary": "#006b5c",
+                      "on-primary-fixed-variant": "#862200",
+                      "tertiary-fixed": "#ffdf9e",
+                      "surface-container": "#f0eded",
+                      "on-primary-container": "#541200",
+                      "on-secondary-container": "#007261",
+                      "on-background": "#1b1c1c",
+                      "surface-container-highest": "#e5e2e1",
+                      "primary-fixed-dim": "#ffb5a0",
+                      "on-surface": "#1b1c1c",
+                      "primary": "#b02f00",
+                      "on-secondary-fixed-variant": "#005145",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#5b4039",
+                      "surface-container-low": "#f6f3f2",
+                      "primary-fixed": "#ffdbd1",
+                      "on-secondary": "#ffffff",
+                      "surface": "#fcf9f8",
+                      "on-tertiary-container": "#372700",
+                      "on-primary-fixed": "#3b0900",
+                      "secondary-fixed-dim": "#44ddc1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "2xl": "48px",
+                      "sm": "12px",
+                      "base": "8px",
+                      "margin-desktop": "64px",
+                      "gutter": "16px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Outfit", "sans-serif"],
+                      "headline-lg": ["Outfit", "sans-serif"],
+                      "body-md": ["Inter", "sans-serif"],
+                      "label-sm": ["Inter", "sans-serif"],
+                      "headline-lg-mobile": ["Outfit", "sans-serif"],
+                      "body-lg": ["Inter", "sans-serif"],
+                      "label-lg": ["Inter", "sans-serif"],
+                      "display-lg": ["Outfit", "sans-serif"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                      "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                      "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                      "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                      "headline-lg-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                      "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                      "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                      "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .pulse-ring { animation: pulseRing 2s infinite; }
+        @keyframes pulseRing { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.5); opacity: 0; } }
+        @keyframes pulse-ring { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.6); opacity: 0; } }
+        .animate-pulse-ring-1 { animation: pulse-ring 2.5s cubic-bezier(0.215,0.61,0.355,1) infinite; }
+        .animate-pulse-ring-2 { animation: pulse-ring 2.5s cubic-bezier(0.215,0.61,0.355,1) infinite 0.8s; }
+        .animate-pulse-ring-3 { animation: pulse-ring 2.5s cubic-bezier(0.215,0.61,0.355,1) infinite 1.6s; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden pt-20 pb-32 md:pb-16">
+
+<main class="flex-grow px-4 md:px-8 pb-16 max-w-[1200px] mx-auto w-full" id="main-container">
+  <div id="inProgressBanner" class="hidden mb-6"></div>
+
+  <!-- View 1: Checkout Form -->
+  <div class="fade-in" id="view-checkout">
+    <div class="mb-6">
+      <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">Order Review &amp; Place Karo</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Apne selected dishes, address aur payment mode confirm karo.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <!-- Delivery Address Card -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-variant shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[24px]">location_on</span>
+              Delivery Address
+            </h2>
+            <button id="btnChangeAddress" class="text-primary font-label-lg text-label-lg font-bold hover:underline cursor-pointer">Badlo</button>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home</span>
+            </div>
+            <div>
+              <div id="checkoutAddressTitle" class="font-bold text-on-surface text-sm">Home (Indiranagar)</div>
+              <div id="checkoutAddressDetails" class="text-xs text-on-surface-variant mt-0.5">Flat 402, Skyline Apartments, Indiranagar, Bengaluru, Karnataka 560038</div>
+              <div class="text-[11px] text-secondary font-bold mt-1">⚡ Express Delivery in ~28 mins</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Mode Card -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-variant shadow-sm">
+          <h2 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[24px]">payments</span>
+            Payment Mode Chuno
+          </h2>
+          <div class="space-y-3">
+            <label class="flex items-center justify-between p-4 rounded-xl border border-primary bg-primary/5 cursor-pointer">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="payMethod" value="UPI" checked class="accent-[#b02f00] w-4 h-4"/>
+                <div>
+                  <div class="font-bold text-sm text-on-surface">UPI Instant Payment (Fast &amp; Safe)</div>
+                  <div class="text-xs text-on-surface-variant">Google Pay, PhonePe, Paytm, BHIM</div>
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-primary">qr_code_2</span>
+            </label>
+
+            <label class="flex items-center justify-between p-4 rounded-xl border border-outline-variant/30 hover:border-outline-variant cursor-pointer transition-colors">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="payMethod" value="Cash on Delivery" class="accent-[#b02f00] w-4 h-4"/>
+                <div>
+                  <div class="font-bold text-sm text-on-surface">Cash / UPI on Delivery</div>
+                  <div class="text-xs text-on-surface-variant">Khana aane par delivery partner ko pay karo</div>
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant">local_atm</span>
+            </label>
+
+            <label class="flex items-center justify-between p-4 rounded-xl border border-outline-variant/30 hover:border-outline-variant cursor-pointer transition-colors">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="payMethod" value="Card" class="accent-[#b02f00] w-4 h-4"/>
+                <div>
+                  <div class="font-bold text-sm text-on-surface">Credit / Debit Card</div>
+                  <div class="text-xs text-on-surface-variant">Visa, Mastercard, RuPay</div>
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary & Coupon -->
+      <div class="lg:col-span-5 flex flex-col gap-6 sticky top-24">
+        <div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-variant shadow-sm">
+          <h2 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center justify-between">
+            <span>Aapka Order</span>
+            <span id="summaryItemCount" class="text-xs font-normal text-on-surface-variant">0 items</span>
+          </h2>
+
+          <div id="checkoutItemList" class="space-y-3 mb-5 max-h-[260px] overflow-y-auto pr-1"></div>
+
+          <!-- Coupon Box -->
+          <div class="mb-5">
+            <div class="flex gap-2">
+              <input id="couponInput" type="text" placeholder="Coupon code (e.g. BHUKKAD50)" class="flex-1 uppercase bg-surface text-on-surface text-xs rounded-xl px-3.5 py-2.5 border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-primary-container"/>
+              <button id="btnApplyCoupon" class="bg-surface-container hover:bg-surface-variant text-on-surface font-bold text-xs px-4 py-2.5 rounded-xl border border-outline-variant/40 transition-colors">Apply</button>
+            </div>
+            <div id="couponAppliedLabel" class="hidden mt-2 text-xs font-bold text-secondary flex items-center gap-1"></div>
+          </div>
+
+          <div class="border-t border-dashed border-outline-variant pt-4 mb-5 space-y-2">
+            <div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+              <span>Item Total</span>
+              <span id="billItemTotal" class="font-bold text-on-surface">₹0.00</span>
+            </div>
+            <div id="billDiscountRow" class="hidden justify-between font-body-md text-body-md text-secondary font-semibold">
+              <span id="billDiscountLabel">Discount</span>
+              <span id="billDiscount">-₹0.00</span>
+            </div>
+            <div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+              <span>Delivery Fee</span>
+              <span id="billDeliveryFee" class="font-bold text-on-surface">₹0.00</span>
+            </div>
+            <div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+              <span>Taxes (GST 5%)</span>
+              <span id="billTaxes" class="font-bold text-on-surface">₹0.00</span>
+            </div>
+          </div>
+
+          <div class="border-t border-surface-variant pt-4 mb-4 flex justify-between items-center">
+            <span class="font-headline-md text-headline-md text-on-background font-bold">To Pay</span>
+            <span class="font-headline-md text-headline-md text-primary font-black" id="billGrandTotal">₹0.00</span>
+          </div>
+
+          <button class="w-full bg-primary-container text-white font-label-lg text-label-lg py-4 rounded-xl hover:bg-primary transition-colors shadow-md hover:shadow-lg flex items-center justify-center gap-2 font-bold" id="btn-checkout">
+            <span class="material-symbols-outlined">shopping_cart_checkout</span>
+            <span>Order Confirm Karo</span>
+          </button>
+
+          <p id="checkoutError" class="hidden mt-3 text-center text-xs font-semibold text-error"></p>
+
+          <div class="mt-4 text-center">
+            <button id="btnTrackExisting" class="text-primary text-xs font-bold underline underline-offset-4 hover:text-[#862200]">Order ID hai? Yahan Track karo →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- View 2: Tracking -->
+  <div class="hidden fade-in max-w-4xl mx-auto" id="view-tracking">
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-secondary/10 text-secondary mb-4 relative">
+        <div class="absolute inset-0 rounded-full bg-secondary/20 pulse-ring"></div>
+        <span class="material-symbols-outlined text-4xl filled relative z-10">check_circle</span>
+      </div>
+      <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background font-black">Order Confirm Ho Gaya!</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mt-2">Kitchen mein aapka khana fresh aur garama-garam tayyar ho raha hai.</p>
+      <div id="orderIdChip" class="inline-flex items-center gap-2 mt-4 bg-surface-container-low border border-outline-variant/40 rounded-full px-4 py-2 text-sm font-bold text-on-surface">
+        <span class="material-symbols-outlined text-primary text-[18px]">receipt_long</span>
+        <span id="orderIdDisplay">#BK-00000</span>
+      </div>
+    </div>
+
+    <div class="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-sm border border-surface-variant mb-8 bg-surface-container-high">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#fde8e8] via-[#f6f3f2] to-[#e3f6e4] flex items-center justify-center">
+        <span class="material-symbols-outlined text-[90px] text-primary/20" style="font-variation-settings: 'FILL' 1;">map</span>
+      </div>
+      <div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-sm border border-outline-variant flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">timer</span>
+        <span id="orderEtaChip" class="font-label-lg text-label-lg text-on-surface font-bold">Arriving in 28 mins</span>
+      </div>
+      <div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+        <div class="bg-surface p-1 rounded-full shadow-md mb-1 border border-primary">
+          <span class="material-symbols-outlined text-primary filled">two_wheeler</span>
+        </div>
+        <div class="w-2 h-2 bg-primary rounded-full pulse-ring"></div>
+      </div>
+      <div class="absolute top-1/2 left-2/3 -translate-x-1/2 -translate-y-1/2">
+        <span class="material-symbols-outlined text-error text-3xl filled drop-shadow-md">location_on</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-surface-variant">
+        <h3 class="font-label-lg text-label-lg text-on-surface-variant mb-4 uppercase tracking-wider font-bold">Order Progress</h3>
+        <div id="orderStatusText" class="bg-secondary-container/40 text-on-surface font-bold text-sm rounded-lg px-3 py-2 mb-5"></div>
+        <div id="orderTimeline" class="relative pl-6 space-y-6"></div>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-surface-variant flex flex-col">
+        <h3 class="font-label-lg text-label-lg text-on-surface-variant mb-4 uppercase tracking-wider font-bold">Order Details</h3>
+        <div id="orderItemsList" class="space-y-3 mb-4 flex-1"></div>
+        <div class="pt-4 border-t border-dashed border-outline-variant space-y-2 text-sm">
+          <div class="flex justify-between text-on-surface-variant"><span>Delivering to</span><span id="orderAddress" class="font-bold text-on-surface text-right max-w-[60%]"></span></div>
+          <div class="flex justify-between text-on-surface-variant"><span>Payment</span><span id="orderPayment" class="font-bold text-on-surface"></span></div>
+          <div class="flex justify-between font-bold"><span>Total</span><span id="orderBillTotal" class="text-primary"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-center gap-4 flex-wrap">
+      <a href="menu.html" class="inline-block bg-primary-container text-white font-label-lg font-bold px-8 py-3 rounded-full shadow-md hover:bg-primary transition-all">Order More Dishes 🍕</a>
+    </div>
+  </div>
+
+  <!-- Track by ID modal -->
+  <div id="trackIdModal" class="fixed inset-0 z-[90] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-container-lowest rounded-3xl p-6 border border-outline-variant/40 shadow-2xl max-w-md w-full animate-[fadeIn_0.2s_ease-out]">
+      <h3 class="font-headline-md text-lg font-bold text-on-surface mb-4">Track Your Order</h3>
+      <input id="trackIdInput" type="text" placeholder="e.g. BK-12345" class="w-full bg-surface-container-low text-on-surface text-xs rounded-xl px-4 py-3 border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-primary-container mb-3"/>
+      <div id="trackIdResult" class="hidden text-xs mb-3 rounded-lg px-3 py-2"></div>
+      <div class="flex gap-3">
+        <button id="btnDoTrack" class="flex-1 bg-primary-container text-white text-xs font-bold py-3 rounded-xl hover:bg-primary transition-colors">Track Order</button>
+        <button id="btnCloseTrack" class="flex-1 bg-surface-container text-on-surface text-xs font-bold py-3 rounded-xl hover:bg-surface-variant transition-colors">Cancel</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+  import { renderHeader, renderBottomNav, renderFooter } from "./assets/nav.js";
+  import { loadCart, computeBill, getLocation, getCoupon, setCoupon, applyCoupon, placeOrder, trackOrder, getLastOrder } from "./assets/cart-state.js";
+
+  const fmt = (n) => "₹" + Number(n).toFixed(2);
+
+  function escapeHtml(s = "") {
+    return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  function syncLocation() {
+    const loc = getLocation();
+    const titleEl = document.getElementById("checkoutLocationTitle");
+    const detEl = document.getElementById("checkoutLocationDetails");
+    if (titleEl) titleEl.textContent = `Home (${loc.split(",")[0]})`;
+    if (detEl) detEl.textContent = `Flat 402, Skyline Apartments, ${loc}, Karnataka 560038`;
+  }
+
+  function renderCheckout() {
+    const items = loadCart();
+    const bill = computeBill(items);
+    const container = document.getElementById("checkoutItemsList");
+    const btn = document.getElementById("btn-checkout");
+
+    if (!items.length) {
+      container.innerHTML = `
+        <div class="text-center py-10">
+          <span class="material-symbols-outlined text-[44px] text-primary/40 block mb-3" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+          <p class="font-bold text-on-surface text-sm">Cart khaali hai!</p>
+          <p class="text-xs text-on-surface-variant mt-1">Pehle kuch tasty add karo.</p>
+          <a href="menu.html" class="inline-block mt-4 bg-primary-container text-white text-xs font-bold px-5 py-2.5 rounded-full hover:bg-primary transition-colors">Explore Menu</a>
+        </div>`;
+      if (btn) btn.disabled = true;
+    } else {
+      btn.disabled = false;
+      container.innerHTML = items.map(it => `
+        <div class="flex justify-between items-center gap-3 py-2 border-b border-outline-variant/10 last:border-none">
+          <div class="flex items-center gap-3 min-w-0">
+            <img class="w-12 h-12 rounded-xl object-cover border border-outline-variant/20 flex-shrink-0" src="${it.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&auto=format&fit=crop&q=80'}" alt="${escapeHtml(it.product_name || it.name)}" onerror="this.src='https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&auto=format&fit=crop&q=80'"/>
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined ${it.is_veg === false ? "text-error" : "text-secondary"} text-[13px]" style="font-variation-settings: 'FILL' 1;">${it.is_veg === false ? "egg_alt" : "eco"}</span>
+                <span class="font-body-md text-body-md text-on-surface font-bold truncate">${escapeHtml(it.product_name || it.name)}</span>
+              </div>
+              <div class="font-label-sm text-label-sm text-on-surface-variant text-xs">${escapeHtml(it.tier || "Regular")} • Qty: ${it.quantity || it.seats || 1}</div>
+            </div>
+          </div>
+          <div class="font-label-lg text-label-lg font-bold text-on-surface flex-shrink-0">${fmt((Number(it.price) || 0) * Number(it.quantity || it.seats || 1))}</div>
+        </div>`).join("");
+    }
+
+    document.getElementById("billItemTotal").textContent = fmt(bill.subtotal);
+    document.getElementById("billDeliveryFee").textContent = bill.deliveryFee > 0 ? fmt(bill.deliveryFee) : "FREE";
+    document.getElementById("billTaxes").textContent = fmt(bill.taxes);
+    document.getElementById("billGrandTotal").textContent = fmt(bill.grandTotal);
+
+    const discRow = document.getElementById("billDiscountRow");
+    if (bill.discount > 0) {
+      discRow.classList.remove("hidden");
+      discRow.classList.add("flex");
+      document.getElementById("billDiscountLabel").textContent = bill.discountMsg || "Discount";
+      document.getElementById("billDiscount").textContent = "-" + fmt(bill.discount);
+    } else {
+      discRow.classList.add("hidden");
+      discRow.classList.remove("flex");
+    }
+
+    const coupon = getCoupon();
+    const couponRow = document.getElementById("couponAppliedRow");
+    if (coupon) {
+      couponRow.classList.remove("hidden");
+      couponRow.classList.add("flex");
+      document.getElementById("couponAppliedLabel").innerHTML = `<span class="material-symbols-outlined text-[14px]">confirmation_number</span> ${coupon} applied`;
+    } else {
+      couponRow.classList.add("hidden");
+      couponRow.classList.remove("flex");
+    }
+  }
+
+  function buildTimeline(status = "Order Placed", eta = 28) {
+    const steps = [
+      { key: "placed", label: "Order Placed", detail: "Kitchen has received your order", icon: "check_circle" },
+      { key: "prep", label: "Preparing", detail: "Chef is crafting your fresh food", icon: "skillet" },
+      { key: "out", label: "Out for Delivery", detail: `Rider is on the way (ETA ${eta} mins)`, icon: "two_wheeler" },
+      { key: "delivered", label: "Delivered", detail: "Enjoy your hot fresh meal!", icon: "home" },
+    ];
+    const map = {
+      "Order Placed": 1,
+      "Order Confirmed": 1,
+      "Preparing": 2,
+      "Out for Delivery": 3,
+      "Delivered": 4,
+    };
+    const cur = map[status] || 2;
+    return steps.map((st, i) => {
+      st.done = (i + 1) <= cur;
+      return `
+      <div class="flex items-start gap-3 relative pb-6 last:pb-0">
+        ${i < steps.length - 1 ? `<div class="absolute left-3 top-6 bottom-0 w-0.5 ${st.done ? "bg-secondary" : "bg-outline-variant/30"}"></div>` : ""}
+        <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 z-10 ${st.done ? "bg-secondary text-white shadow-sm" : "bg-surface-container border border-outline-variant/40 text-on-surface-variant"}">
+          ${st.done ? `<span class="material-symbols-outlined text-[12px] filled">${st.icon}</span>` : ""}
+        </div>
+        <div>
+          <div class="font-label-lg text-label-lg ${st.done ? "text-on-surface" : "text-on-surface"} font-bold">${st.label}</div>
+          <div class="font-label-sm text-label-sm text-on-surface-variant">${st.detail}</div>
+        </div>
+      </div>`;
+    }).join("");
+  }
+
+  function showTracking(order) {
+    const viewCheckout = document.getElementById("view-checkout");
+    const viewTracking = document.getElementById("view-tracking");
+    document.getElementById("orderIdDisplay").textContent = "#" + (order.order_id || "BK-00000");
+    document.getElementById("orderStatusText").textContent = order.status || "Preparing in Kitchen";
+    document.getElementById("orderEtaChip").textContent = `Arriving in ${order.eta_mins || 28} mins`;
+    document.getElementById("orderAddress").textContent = order.address || getLocation();
+    document.getElementById("orderPayment").textContent = order.payment || "UPI";
+    const bill = order.bill || {};
+    document.getElementById("orderBillTotal").textContent = fmt(bill.grand_total || order.grand_total || 0);
+
+    const items = order.items || (getLastOrder() && getLastOrder().items) || [];
+    document.getElementById("orderItemsList").innerHTML = items.length
+      ? items.map(it => `
+        <div class="flex justify-between items-center gap-3 py-1.5 border-b border-outline-variant/10 last:border-none">
+          <div class="flex items-center gap-2 min-w-0">
+            <img class="w-10 h-10 rounded-lg object-cover border border-outline-variant/20 flex-shrink-0" src="${it.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&auto=format&fit=crop&q=80'}" alt="${escapeHtml(it.product_name || it.name)}" onerror="this.src='https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&auto=format&fit=crop&q=80'"/>
+            <div class="min-w-0 text-xs">
+              <div class="font-bold text-on-surface truncate">${escapeHtml(it.product_name || it.name)}</div>
+              <div class="text-on-surface-variant">${escapeHtml(it.tier || "Regular")} x ${it.quantity || it.seats || 1}</div>
+            </div>
+          </div>
+          <div class="text-xs font-bold text-on-surface flex-shrink-0">${fmt((Number(it.price) || 0) * Number(it.quantity || it.seats || 1))}</div>
+        </div>`).join("")
+      : `<p class="text-xs text-on-surface-variant">No items in this order.</p>`;
+
+    document.getElementById("orderTimeline").innerHTML = buildTimeline(order.status, order.eta_mins);
+
+    viewCheckout.style.display = "none";
+    viewTracking.classList.remove("hidden");
+    window.scrollTo(0, 0);
+  }
+
+  let pollTimer = null;
+  function startPolling(orderId, onError) {
+    clearInterval(pollTimer);
+    pollTimer = setInterval(async () => {
+      try {
+        const order = await trackOrder(orderId);
+        if (order && order.order_id) {
+          showTracking(order);
+        }
+      } catch (e) {
+        if (onError) onError(e);
+      }
+    }, 12000);
+  }
+
+  function setCheckoutError(msg) {
+    const el = document.getElementById("checkoutError");
+    if (!msg) { el.classList.add("hidden"); return; }
+    el.textContent = msg;
+    el.classList.remove("hidden");
+  }
+
+  function init() {
+    renderHeader("checkout");
+    renderBottomNav("checkout");
+    renderFooter();
+    syncLocation();
+
+    const applyBtn = document.getElementById("applyCouponBtn");
+    const couponInput = document.getElementById("couponInput");
+    applyBtn.addEventListener("click", () => {
+      const res = applyCoupon(couponInput.value);
+      if (res && !res.ok && res.message) {
+        setCheckoutError(res.message);
+      } else {
+        setCheckoutError("");
+        couponInput.value = "";
+      }
+    });
+
+    document.getElementById("removeCouponBtn").addEventListener("click", () => {
+      setCoupon("");
+      couponInput.value = "";
+      setCheckoutError("");
+    });
+
+    document.getElementById("btnChangeAddress").addEventListener("click", () => {
+      const locBtn = document.getElementById("btnNavLocation");
+      if (locBtn) locBtn.click();
+    });
+
+    const btnCheckout = document.getElementById("btn-checkout");
+    btnCheckout.addEventListener("click", async () => {
+      setCheckoutError("");
+      const payment = (document.querySelector('input[name="payment"]:checked') || {}).value || "UPI / GPay";
+      const original = btnCheckout.innerHTML;
+      btnCheckout.disabled = true;
+      btnCheckout.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span> Bhukkad bana raha hai...';
+      try {
+        const order = await placeOrder({ address: getLocation(), payment });
+        showTracking(order);
+        if (order.coupon_note) setCheckoutError("");
+        startPolling(order.order_id);
+      } catch (err) {
+        setCheckoutError(err.message || "Order failed. Backend chal raha hai? (localhost:8100)");
+        btnCheckout.innerHTML = original;
+        btnCheckout.disabled = false;
+      }
+    });
+
+    const trackModal = document.getElementById("trackIdModal");
+    const openTrack = () => trackModal.classList.remove("hidden");
+    const closeTrack = () => trackModal.classList.add("hidden");
+    document.getElementById("btnTrackExisting").addEventListener("click", openTrack);
+    document.getElementById("btnCloseTrack").addEventListener("click", closeTrack);
+    trackModal.addEventListener("click", (e) => { if (e.target === trackModal) closeTrack(); });
+
+    const doTrack = async () => {
+      const input = document.getElementById("trackIdInput");
+      const result = document.getElementById("trackIdResult");
+      result.classList.remove("hidden");
+      result.className = "text-xs mb-3 rounded-lg px-3 py-2";
+      try {
+        const order = await trackOrder(input.value);
+        result.classList.add("bg-secondary-container/40", "text-on-surface");
+        result.textContent = `Order ${order.order_id} • ${order.status} • ~${order.eta_mins} mins eta`;
+        result.className += " flex";
+      } catch (err) {
+        result.classList.add("bg-error-container", "text-on-error-container");
+        result.textContent = err.message || "Order not found";
+      }
+    };
+    document.getElementById("btnDoTrack").addEventListener("click", doTrack);
+    document.getElementById("trackIdInput").addEventListener("keydown", (e) => { if (e.key === "Enter") doTrack(); });
+
+    const lastOrder = getLastOrder();
+    if (lastOrder && lastOrder.order_id) {
+      const banner = document.getElementById("inProgressBanner");
+      banner.classList.remove("hidden");
+      banner.innerHTML = `
+        <div class="bg-secondary-container/40 border border-secondary-container rounded-2xl p-4 flex items-center gap-4">
+          <span class="material-symbols-outlined text-secondary text-[28px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+          <div class="flex-1">
+            <p class="font-bold text-on-surface text-sm">Order ${lastOrder.order_id} is in progress</p>
+            <p class="text-xs text-on-surface-variant">${escapeHtml(lastOrder.status || "Preparing")} • Estimated delivery in ~${lastOrder.eta_mins || 28} mins</p>
+          </div>
+          <button id="btnResumeTrack" class="bg-primary-container text-white text-xs font-bold px-5 py-2.5 rounded-full hover:bg-primary transition-colors">Track Live</button>
+        </div>`;
+      document.getElementById("btnResumeTrack").addEventListener("click", async () => {
+        try {
+          const order = await trackOrder(lastOrder.order_id);
+          showTracking(order || lastOrder);
+          startPolling(order.order_id, () => {});
+        } catch (err) {
+          showTracking(lastOrder);
+        }
+      });
+    }
+
+    window.addEventListener("bhukkad:location-change", syncLocation);
+    window.addEventListener("bhukkad:cart-change", renderCheckout);
+    renderCheckout();
+  }
+
+  init();
+</script>
+</body>
+</html>
