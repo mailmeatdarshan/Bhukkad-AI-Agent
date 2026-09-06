@@ -24,9 +24,10 @@ _CLAUSE_END_RE = re.compile(r"([,;:\u2014\-]+)\s*")
 
 
 class SentenceChunker:
-    """Buffers streaming token deltas and yields speakable sentence/phrase chunks."""
+    """Buffers streaming token deltas and yields speakable sentence/phrase chunks.
+    Avoids micro-splitting on short clauses so audio flows smoothly without stuttering."""
 
-    def __init__(self, min_clause_chars: int = 35):
+    def __init__(self, min_clause_chars: int = 70):
         self.buffer = ""
         self.min_clause_chars = min_clause_chars
 
@@ -40,15 +41,17 @@ class SentenceChunker:
             if m:
                 end_pos = m.end()
                 sentence = self.buffer[:end_pos].strip()
-                self.buffer = self.buffer[end_pos:]
-                if sentence:
-                    chunks.append(sentence)
-                continue
+                if len(sentence) >= 12 or any(punct in sentence for punct in ("!", "?", "\n")):
+                    self.buffer = self.buffer[end_pos:]
+                    if sentence:
+                        chunks.append(sentence)
+                    continue
 
-            # 2. Check for intermediate clause terminators (, ; :) if buffer is long enough
+            # 2. Check for intermediate clause terminators if sentence is long enough to avoid micro-gaps
             if len(self.buffer) >= self.min_clause_chars:
                 m_clause = _CLAUSE_END_RE.search(self.buffer)
-                if m_clause and m_clause.end() >= 20:
+                min_cut = min(40, self.min_clause_chars)
+                if m_clause and m_clause.end() >= min_cut:
                     end_pos = m_clause.end()
                     clause = self.buffer[:end_pos].strip()
                     self.buffer = self.buffer[end_pos:]

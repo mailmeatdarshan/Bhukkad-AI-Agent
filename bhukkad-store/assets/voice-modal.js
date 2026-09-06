@@ -551,7 +551,7 @@ function connectWebSocket() {
       config: {
         model_key: "gemini-flash",
         tts_provider: "elevenlabs",
-        tts_voice: "Sarah",
+        tts_voice: "Aditi",
         use_rag: true,
         tools_enabled: true,
       }
@@ -873,6 +873,8 @@ function appendSystemMessage(text, save = true) {
   if (save) saveChatMessage("system", text);
 }
 
+let currentAudio = null;
+
 function playAudioChunk(base64Audio) {
   if (!base64Audio) return;
   audioQueue.push(base64Audio);
@@ -884,21 +886,37 @@ function playAudioChunk(base64Audio) {
 function processNextAudio() {
   if (!audioQueue.length) {
     isPlaying = false;
+    currentAudio = null;
     return;
   }
   isPlaying = true;
   const chunk = audioQueue.shift();
   const audio = new Audio("data:audio/mp3;base64," + chunk);
-  audio.onended = () => processNextAudio();
-  audio.onerror = () => processNextAudio();
+  currentAudio = audio;
+  audio.onended = () => {
+    currentAudio = null;
+    processNextAudio();
+  };
+  audio.onerror = () => {
+    currentAudio = null;
+    processNextAudio();
+  };
   audio.play().catch(e => {
     console.warn("Audio autoplay notice", e);
+    currentAudio = null;
     processNextAudio();
   });
 }
 
 function clearAudioQueue() {
   audioQueue = [];
+  if (currentAudio) {
+    try {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    } catch (e) {}
+    currentAudio = null;
+  }
   isPlaying = false;
 }
 

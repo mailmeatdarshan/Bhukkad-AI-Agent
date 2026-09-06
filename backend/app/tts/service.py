@@ -24,9 +24,11 @@ _ELEVEN_MODEL = "eleven_turbo_v2_5"
 VOICES = {
     "openai": ["alloy", "echo", "fable", "onyx", "nova", "shimmer"],
     "gemini": ["Kore", "Puck", "Charon", "Aoede", "Fenrir"],
-    "elevenlabs": ["Sarah", "Roger", "Laura"],
+    "elevenlabs": ["Aditi", "Priya", "Sarah", "Roger", "Laura"],
 }
 _ELEVEN_VOICE_IDS = {
+    "Aditi": "hA4Dm9WZlcqgI5vWauXp",  # Indian multilingual voice
+    "Priya": "g5CIjZEefAph4nQFvHAz",  # Indian female voice
     "Sarah": "EXAVITQu4vr4xnSDxMaL",
     "Roger": "CwhRBWXzGAHq8TQ4Fs17",
     "Laura": "FGY2WhTYpPnrIDTdsKH5",
@@ -58,13 +60,31 @@ def _openai(text: str, voice: str, key: str) -> tuple[bytes, str]:
 
 
 def _elevenlabs(text: str, voice: str, key: str) -> tuple[bytes, str]:
-    vid = _ELEVEN_VOICE_IDS.get(voice, list(_ELEVEN_VOICE_IDS.values())[0])
+    vid = _ELEVEN_VOICE_IDS.get(voice, voice if len(voice) > 10 else list(_ELEVEN_VOICE_IDS.values())[0])
+    payload = {
+        "text": text,
+        "model_id": _ELEVEN_MODEL,
+        "voice_settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "use_speaker_boost": True,
+        }
+    }
     r = httpx.post(
         f"https://api.elevenlabs.io/v1/text-to-speech/{vid}",
         headers={"xi-api-key": key, "Content-Type": "application/json", "Accept": "audio/mpeg"},
-        json={"text": text, "model_id": _ELEVEN_MODEL},
+        json=payload,
         timeout=_TIMEOUT,
     )
+    # If custom Indian voice is not present in account, fallback gracefully to Sarah
+    if r.status_code == 404 and vid != _ELEVEN_VOICE_IDS["Sarah"]:
+        fallback_vid = _ELEVEN_VOICE_IDS["Sarah"]
+        r = httpx.post(
+            f"https://api.elevenlabs.io/v1/text-to-speech/{fallback_vid}",
+            headers={"xi-api-key": key, "Content-Type": "application/json", "Accept": "audio/mpeg"},
+            json=payload,
+            timeout=_TIMEOUT,
+        )
     if r.status_code != 200:
         raise RuntimeError(f"ElevenLabs TTS error {r.status_code}: {r.text[:200]}")
     return r.content, "audio/mpeg"

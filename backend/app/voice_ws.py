@@ -28,7 +28,7 @@ class VoiceSession:
         self.session_id = session_id
         self.model_key = "gemini-flash" if os.getenv("GEMINI_API_KEY") else "openai-lite"
         self.tts_provider = "elevenlabs"
-        self.tts_voice = "Sarah"
+        self.tts_voice = "Aditi"
         self.system_prompt: str | None = None
         self.response_length = "medium"
         self.verbatim_turns = 6
