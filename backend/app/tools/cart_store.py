@@ -111,3 +111,13 @@ def get_order(order_id: str) -> dict | None:
         _orders.move_to_end(order_id)
         return _orders[order_id]
     return None
+
+
+def get_latest_order(session_id: str | None = None) -> dict | None:
+    if not _orders:
+        return None
+    if session_id:
+        for order in reversed(_orders.values()):
+            if order.get("session_id") == session_id:
+                return order
+    return next(reversed(_orders.values()))

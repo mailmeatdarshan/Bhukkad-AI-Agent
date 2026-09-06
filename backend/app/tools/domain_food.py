@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import random
 import time
+import urllib.parse
 from typing import TYPE_CHECKING, Any
 
 from app.tools import cart_store as cart
@@ -89,7 +90,18 @@ def add_to_cart(session_id: str, product: str, tier: str | None = None, seats: i
     diet = "🟢 Veg" if p.get("is_veg") else "🔴 Non-Veg"
     cust_str = f" with {customization}" if customization else ""
     return {
-        "added": {"item": p["name"], "portion": tier_name, "quantity": qty, "customization": customization},
+        "added": {
+            "id": p["id"],
+            "name": p["name"],
+            "item": p["name"],
+            "tier": tier_name,
+            "portion": tier_name,
+            "price": price,
+            "quantity": qty,
+            "customization": customization,
+            "is_veg": p.get("is_veg", True),
+            "image": p.get("image", ""),
+        },
         "cart_count": sum(i.get("quantity", i.get("seats", 1)) for i in items),
         "subtotal": bill["subtotal"],
         "grand_total": bill["grand_total"],
@@ -265,6 +277,47 @@ def remove_from_cart(session_id: str, product: str, tier: str | None = None, qua
         }
 
 
+def build_whatsapp_receipt_url(order_data: dict, phone: str = "") -> str:
+    order_id = order_data.get("order_id", "BK-00000")
+    address = order_data.get("address", "Home Address")
+    eta = order_data.get("eta_mins", 28)
+    bill = order_data.get("bill", {})
+    grand_total = bill.get("grand_total", order_data.get("grand_total", 0))
+    items = order_data.get("items", [])
+
+    items_summary = []
+    for it in items:
+        name = it.get("product_name") or it.get("name") or it.get("product") or "Item"
+        qty = it.get("quantity") or it.get("seats") or 1
+        tier = it.get("tier")
+        tier_str = f" ({tier})" if tier and tier not in ("Standard", "Regular") else ""
+        items_summary.append(f"* {qty}x {name}{tier_str}")
+
+    items_text = "\n".join(items_summary) if items_summary else "* Food items"
+
+    receipt_text = (
+        f"BHUKKAD FOOD ORDER RECEIPT\n"
+        f"===========================\n"
+        f"Order ID: #{order_id}\n"
+        f"Status: Confirmed & In Kitchen\n"
+        f"---------------------------\n"
+        f"Items Ordered:\n"
+        f"{items_text}\n"
+        f"---------------------------\n"
+        f"Total Amount: Rs. {grand_total}\n"
+        f"Delivery Address: {address}\n"
+        f"Estimated Time: ~{eta} mins\n"
+        f"---------------------------\n"
+        f"Track live: http://localhost:8100/checkout.html\n"
+        f"Thank you for ordering with Bhukkad!"
+    )
+    encoded = urllib.parse.quote(receipt_text)
+    phone_clean = "".join(c for c in phone if c.isdigit())
+    if phone_clean:
+        return f"https://api.whatsapp.com/send?phone={phone_clean}&text={encoded}"
+    return f"https://api.whatsapp.com/send?text={encoded}"
+
+
 # ---- Handler 8: Checkout & Place Order ----
 def checkout(session_id: str, delivery_address: str = "Home Address", payment_method: str = "Cash on Delivery / UPI") -> dict:
     items = cart.get(session_id)
@@ -279,6 +332,7 @@ def checkout(session_id: str, delivery_address: str = "Home Address", payment_me
     
     order_data = {
         "order_id": order_id,
+        "session_id": session_id,
         "items": items,
         "bill": bill,
         "address": delivery_address,
@@ -287,14 +341,44 @@ def checkout(session_id: str, delivery_address: str = "Home Address", payment_me
         "status": "Preparing in Kitchen (Chef Vikram)",
         "eta_mins": 28,
     }
+    whatsapp_url = build_whatsapp_receipt_url(order_data)
+    order_data["whatsapp_url"] = whatsapp_url
     cart.save_order(order_id, order_data)
     cart.clear(session_id)
     
     return {
         "order_id": order_id,
+        "items": items,
+        "bill": bill,
+        "address": delivery_address,
         "grand_total": bill["grand_total"],
-        "eta": "28–30 mins",
-        "message": f"🎉 Order #{order_id} placed successfully! Total {_money(bill['grand_total'])}. Your food is being prepared fresh and will be delivered to '{delivery_address}' in approx 28–30 mins. Live tracking is active.",
+        "eta": "28-30 mins",
+        "whatsapp_url": whatsapp_url,
+        "message": (
+            f"Order #{order_id} confirm ho gaya hai! Total {_money(bill['grand_total'])}. "
+            f"Food fresh prepare ho raha hai aur '{delivery_address}' par lagbhag 28-30 mins mein deliver ho jayega. "
+            f"Aapka order confirm ho gaya hai, kya aap receipt WhatsApp par lena chahte hain?"
+        ),
+    }
+
+
+# ---- Handler 8b: Send WhatsApp Receipt ----
+def send_whatsapp_receipt(session_id: str, order_id: str | None = None, phone_number: str = "") -> dict:
+    target_id = (order_id or "").upper().strip() if order_id else None
+    order = None
+    if target_id:
+        order = cart.get_order(target_id)
+    if not order:
+        order = cart.get_latest_order(session_id)
+    if not order:
+        return {"error": "Koi active order nahi mila jiska receipt generate kiya ja sake."}
+
+    whatsapp_url = build_whatsapp_receipt_url(order, phone_number)
+    oid = order.get("order_id", "BK-00000")
+    return {
+        "order_id": oid,
+        "whatsapp_url": whatsapp_url,
+        "message": f"Order #{oid} ka WhatsApp receipt link ready hai! Niche diye gaye button par click karke WhatsApp par receipt open kar sakte hain.",
     }
 
 
@@ -398,6 +482,14 @@ def get_food_tools() -> list["ToolSpec"]:
                      "payment_method": {"type": "string", "description": "Payment mode like 'UPI', 'Cash on Delivery', 'Card'."},
                  }),
                  checkout, True),
+
+        ToolSpec("send_whatsapp_receipt",
+                 "Generate or send a WhatsApp receipt link for an order.",
+                 _schema({
+                     "order_id": {"type": "string", "description": "Optional Order ID like 'BK-12345'. Defaults to the latest placed order."},
+                     "phone_number": {"type": "string", "description": "Optional phone number with country code."},
+                 }),
+                 send_whatsapp_receipt, True),
 
         ToolSpec("track_order",
                  "Track real-time kitchen preparation and rider status for an order ID.",

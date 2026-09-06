@@ -2,7 +2,7 @@
 // Layout: ElevenLabs 3-State Architecture (Orb FAB, Compact Pill Bar, Expanded Chat Popover)
 // Visual: Bhukkad Glowing Saffron & Mint Orb with Brand Logo, Warm Espresso Cards, Vibrant Saffron CTAs.
 
-import { addToCart, applyCoupon, setLastOrder, showToast, computeBill, apiBase } from "./cart-state.js";
+import { addToCart, removeFromCart, clearCart, applyCoupon, setLastOrder, showToast, computeBill, apiBase, getWhatsAppReceiptUrl } from "./cart-state.js";
 
 let ws = null;
 let isPlaying = false;
@@ -309,6 +309,7 @@ export function mountVoiceAssistant() {
   document.body.appendChild(container);
   bindWidgetEvents();
   renderMode();
+  restoreChatHistory();
 }
 
 function bindWidgetEvents() {
@@ -535,14 +536,16 @@ function connectWebSocket() {
   }
 
   const api = apiBase().replace(/^https?:\/\//, "");
-  const wsUrl = "ws://" + api + "/ws/voice";
+  const savedSessionId = sessionStorage.getItem("bhukkad_session_id");
+  const wsUrl = "ws://" + api + "/ws/voice" + (savedSessionId ? `?session_id=${encodeURIComponent(savedSessionId)}` : "");
   updateLiveStatus("Connecting...", "text-amber-400");
 
   ws = new WebSocket(wsUrl);
 
   ws.onopen = () => {
     updateLiveStatus("Online", "text-secondary");
-    ws.send(JSON.stringify({
+    const savedSessionId = sessionStorage.getItem("bhukkad_session_id");
+    const initMsg = {
       type: "init",
       config: {
         model_key: "gemini-flash",
@@ -551,7 +554,9 @@ function connectWebSocket() {
         use_rag: true,
         tools_enabled: true,
       }
-    }));
+    };
+    if (savedSessionId) initMsg.session_id = savedSessionId;
+    ws.send(JSON.stringify(initMsg));
   };
 
   ws.onmessage = (event) => {
@@ -577,6 +582,9 @@ let activeAIBubbleEl = null;
 
 function handleServerMessage(msg) {
   if (msg.type === "ready") {
+    if (msg.session_id) {
+      sessionStorage.setItem("bhukkad_session_id", msg.session_id);
+    }
     updateLiveStatus("Online", "text-secondary");
   } else if (msg.type === "llm_delta") {
     if (!activeAIBubbleEl) {
@@ -588,6 +596,7 @@ function handleServerMessage(msg) {
       scrollToBottom();
     }
   } else if (msg.type === "turn_done") {
+    if (msg.text) saveChatMessage("assistant", msg.text);
     activeAIBubbleEl = null;
   } else if (msg.type === "audio") {
     playAudioChunk(msg.data || msg.audio);
@@ -603,16 +612,41 @@ function handleServerMessage(msg) {
 
 function handleToolCallSync(name, args, result) {
   if (name === "add_to_cart") {
-    addToCart(args.product, args.tier || "Regular", args.seats || args.quantity || 1, args.customization || "");
+    const itemData = (result && result.added) ? {
+      id: result.added.id || (result.added.name || result.added.item || "").toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      name: result.added.name || result.added.item || (typeof args.product === "string" ? args.product : args.product?.name),
+      is_veg: result.added.is_veg !== false,
+      image: result.added.image,
+      tiers: [{ name: result.added.tier || result.added.portion || args.tier || "Regular", priceMonthly: result.added.price }]
+    } : args.product;
+
+    const chosenTier = result?.added?.tier || result?.added?.portion || args.tier || "Regular";
+    const chosenQty = result?.added?.quantity || args.seats || args.quantity || 1;
+    const chosenCust = result?.added?.customization || args.customization || "";
+
+    addToCart(itemData, chosenTier, chosenQty, chosenCust);
     const bill = computeBill();
-    renderCartToolCard(args.product?.name || args.product, args.tier || "Regular", bill.grandTotal);
+    const dishDisplayName = result?.added?.name || result?.added?.item || (typeof args.product === "string" ? args.product : args.product?.name);
+    renderCartToolCard(dishDisplayName, chosenTier, bill.grandTotal);
+  } else if (name === "remove_from_cart") {
+    removeFromCart(args.product, args.quantity || 1, args.tier);
+  } else if (name === "clear_cart") {
+    clearCart();
   } else if (name === "apply_coupon") {
     applyCoupon(args.coupon_code);
-    appendSystemMessage(`🎟️ Coupon ${args.coupon_code} apply ho gaya!`);
+    appendSystemMessage(`Coupon ${args.coupon_code} apply ho gaya!`);
   } else if (name === "checkout") {
     if (result && result.order_id) {
       setLastOrder(result);
-      appendSystemMessage(`🎉 Order #${result.order_id} confirm ho gaya! ~28 mins mein delivery.`);
+      appendSystemMessage(`Order #${result.order_id} confirm ho gaya! ~28 mins mein delivery.`);
+      renderWhatsAppReceiptCard(result);
+    }
+  } else if (name === "send_whatsapp_receipt") {
+    if (result && result.order_id) {
+      renderWhatsAppReceiptCard(result);
+      if (result.whatsapp_url) {
+        window.open(result.whatsapp_url, "_blank");
+      }
     }
   }
 }
@@ -744,6 +778,7 @@ function appendUserBubble(text) {
   `;
   feed.appendChild(div);
   scrollToBottom();
+  saveChatMessage("user", text);
 }
 
 function createAIBubble(initialText = "") {
@@ -761,7 +796,7 @@ function createAIBubble(initialText = "") {
   return div;
 }
 
-function renderCartToolCard(dishName, tier, grandTotal) {
+function renderCartToolCard(dishName, tier, grandTotal, save = true) {
   const feed = document.getElementById("bhukkadChatFeed");
   if (!feed) return;
   const card = document.createElement("div");
@@ -783,9 +818,46 @@ function renderCartToolCard(dishName, tier, grandTotal) {
   `;
   feed.appendChild(card);
   scrollToBottom();
+  if (save) saveChatMessage("card", { dishName, tier, grandTotal });
 }
 
-function appendSystemMessage(text) {
+function renderWhatsAppReceiptCard(order, save = true) {
+  const feed = document.getElementById("bhukkadChatFeed");
+  if (!feed || !order) return;
+
+  const orderId = order.order_id || "BK-00000";
+  const grandTotal = order.grand_total || order.bill?.grand_total || 0;
+  const whatsappUrl = order.whatsapp_url || getWhatsAppReceiptUrl(order);
+
+  const card = document.createElement("div");
+  card.className = "w-full max-w-[95%] bg-[#18261e] border border-[#25D366]/40 rounded-2xl p-3 my-2 flex flex-col gap-2.5 shadow-xl animate-[fadeIn_0.25s_ease-out]";
+  card.innerHTML = `
+    <div class="flex items-center justify-between border-b border-white/10 pb-2">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-full bg-[#25D366]/20 flex items-center justify-center text-[#25D366]">
+          <span class="material-symbols-outlined text-[17px]">receipt_long</span>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-white">Order Confirmed • #${escapeHtml(orderId)}</div>
+          <div class="text-[10px] text-white/60">Grand Total: ₹${grandTotal}</div>
+        </div>
+      </div>
+      <span class="text-[10px] font-bold text-[#25D366] bg-[#25D366]/10 px-2 py-0.5 rounded-full border border-[#25D366]/20">Active</span>
+    </div>
+    <div class="text-[11px] text-white/85 leading-snug">
+      Aapka order confirm ho gaya hai. Kya aap receipt WhatsApp par lena chahte hain?
+    </div>
+    <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-black font-bold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md">
+      <span class="material-symbols-outlined text-[16px]">chat</span>
+      <span>WhatsApp par Receipt lein</span>
+    </a>
+  `;
+  feed.appendChild(card);
+  scrollToBottom();
+  if (save) saveChatMessage("receipt", order);
+}
+
+function appendSystemMessage(text, save = true) {
   const feed = document.getElementById("bhukkadChatFeed");
   if (!feed) return;
   const div = document.createElement("div");
@@ -797,6 +869,7 @@ function appendSystemMessage(text) {
   `;
   feed.appendChild(div);
   scrollToBottom();
+  if (save) saveChatMessage("system", text);
 }
 
 function playAudioChunk(base64Audio) {
@@ -843,6 +916,56 @@ function scrollToBottom() {
 
 function escapeHtml(s = "") {
   return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+// ---- Chat History Persistence (sessionStorage) ----
+const CHAT_HISTORY_KEY = "bhukkad_chat_history";
+
+function saveChatMessage(role, content) {
+  try {
+    const history = JSON.parse(sessionStorage.getItem(CHAT_HISTORY_KEY) || "[]");
+    history.push({ role, content });
+    // Keep last 50 messages to avoid storage bloat
+    if (history.length > 50) history.splice(0, history.length - 50);
+    sessionStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(history));
+  } catch (e) { /* ignore storage errors */ }
+}
+
+function restoreChatHistory() {
+  try {
+    const history = JSON.parse(sessionStorage.getItem(CHAT_HISTORY_KEY) || "[]");
+    if (!history.length) return;
+    const feed = document.getElementById("bhukkadChatFeed");
+    if (!feed) return;
+    for (const msg of history) {
+      if (msg.role === "user") {
+        const div = document.createElement("div");
+        div.className = "flex justify-end";
+        div.innerHTML = `
+          <div class="bg-gradient-to-r from-primary to-[#ff6b00] text-white font-medium rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] shadow-md leading-relaxed text-xs sm:text-sm">
+            ${escapeHtml(msg.content)}
+          </div>
+        `;
+        feed.appendChild(div);
+      } else if (msg.role === "assistant") {
+        const div = document.createElement("div");
+        div.className = "flex flex-col items-start gap-1 max-w-[90%]";
+        div.innerHTML = `
+          <div class="bg-[#241c19] border border-white/10 text-white/95 rounded-2xl rounded-tl-sm px-4 py-3 leading-relaxed shadow-sm text-xs sm:text-sm">
+            <span class="ai-bubble-text">${escapeHtml(msg.content)}</span>
+          </div>
+        `;
+        feed.appendChild(div);
+      } else if (msg.role === "card" && msg.content) {
+        renderCartToolCard(msg.content.dishName, msg.content.tier, msg.content.grandTotal, false);
+      } else if (msg.role === "receipt" && msg.content) {
+        renderWhatsAppReceiptCard(msg.content, false);
+      } else if (msg.role === "system" && msg.content) {
+        appendSystemMessage(msg.content, false);
+      }
+    }
+    scrollToBottom();
+  } catch (e) { /* ignore */ }
 }
 
 // Auto mount on document load

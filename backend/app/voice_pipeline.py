@@ -125,6 +125,11 @@ async def run_streaming_voice_pipeline(
             yield {"type": "error", "error": str(e)}
             return
 
+        # Emit tool_call events so the client can sync local state (e.g. localStorage cart)
+        if trace:
+            for t in trace:
+                yield {"type": "tool_call", "name": t["name"], "arguments": t.get("args", {}), "result": t.get("result")}
+
         yield {"type": "llm_delta", "delta": text}
         _STORE.append(req.session_id, "user", req.message)
         _STORE.append(req.session_id, "assistant", text)

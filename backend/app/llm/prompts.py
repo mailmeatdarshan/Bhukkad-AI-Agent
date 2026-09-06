@@ -28,6 +28,7 @@ DEFAULT_ROUTING_RULES = (
     "- When a user asks for dietary choices (Veg/Non-Veg, under ₹500, healthy), call `filter_menu`.\n"
     "- When a user asks about ingredients or allergen safety, call `item_details`.\n"
     "- When a user asks to check out or place the order, call `checkout`.\n"
+    "- When order is placed, ask the user if they want the receipt on WhatsApp. If the user says yes or asks to send/get the bill or receipt on WhatsApp, call `send_whatsapp_receipt`.\n"
     "- When asked about delivery time (30 mins express guarantee), cold food refunds, or midnight service, use the knowledge base."
 )
 

@@ -268,6 +268,12 @@
         <span class="material-symbols-outlined text-primary text-[18px]">receipt_long</span>
         <span id="orderIdDisplay">#BK-00000</span>
       </div>
+      <div class="mt-4 flex justify-center">
+        <a id="orderWhatsAppBtn" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-black font-bold text-xs md:text-sm px-5 py-2.5 rounded-full shadow-md transition-all">
+          <span class="material-symbols-outlined text-[18px]">chat</span>
+          <span>WhatsApp par Receipt lein</span>
+        </a>
+      </div>
     </div>
 
     <div class="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-sm border border-surface-variant mb-8 bg-surface-container-high">
@@ -328,7 +334,7 @@
 
 <script type="module">
   import { renderHeader, renderBottomNav, renderFooter } from "./assets/nav.js";
-  import { loadCart, computeBill, getLocation, getCoupon, setCoupon, applyCoupon, placeOrder, trackOrder, getLastOrder } from "./assets/cart-state.js";
+  import { loadCart, computeBill, getLocation, getCoupon, setCoupon, applyCoupon, placeOrder, trackOrder, getLastOrder, getWhatsAppReceiptUrl } from "./assets/cart-state.js";
 
   const fmt = (n) => "₹" + Number(n).toFixed(2);
 
@@ -446,6 +452,11 @@
     document.getElementById("orderPayment").textContent = order.payment || "UPI";
     const bill = order.bill || {};
     document.getElementById("orderBillTotal").textContent = fmt(bill.grand_total || order.grand_total || 0);
+
+    const waBtn = document.getElementById("orderWhatsAppBtn");
+    if (waBtn) {
+      waBtn.href = getWhatsAppReceiptUrl(order);
+    }
 
     const items = order.items || (getLastOrder() && getLastOrder().items) || [];
     document.getElementById("orderItemsList").innerHTML = items.length

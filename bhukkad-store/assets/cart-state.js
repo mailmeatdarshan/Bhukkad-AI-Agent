@@ -290,3 +290,42 @@ export function showToast(message) {
     el.classList.add("translate-y-8", "opacity-0", "pointer-events-none");
   }, 2200);
 }
+
+export function getWhatsAppReceiptUrl(order) {
+  if (!order) return "";
+  const orderId = order.order_id || "BK-00000";
+  const address = order.address || order.delivery_address || getLocation() || "Customer Address";
+  const eta = order.eta_mins ? `${order.eta_mins} mins` : (order.eta || "28-30 mins");
+  const bill = order.bill || {};
+  const total = order.grand_total || bill.grand_total || 0;
+
+  const rawItems = order.items || [];
+  const itemsText = rawItems.length
+    ? rawItems.map(it => {
+        const name = it.product_name || it.name || it.product || "Dish";
+        const qty = it.quantity || it.seats || 1;
+        const size = it.tier && it.tier !== "Standard" && it.tier !== "Regular" ? ` (${it.tier})` : "";
+        return `* ${qty}x ${name}${size}`;
+      }).join("\n")
+    : "* Food Items";
+
+  const lines = [
+    "BHUKKAD FOOD ORDER RECEIPT",
+    "===========================",
+    `Order ID: #${orderId}`,
+    `Status: Order Confirmed & In Kitchen`,
+    "---------------------------",
+    "Items Ordered:",
+    itemsText,
+    "---------------------------",
+    `Total Amount: Rs. ${total}`,
+    `Delivery Address: ${address}`,
+    `Estimated Time: ~${eta}`,
+    "---------------------------",
+    "Track live: http://localhost:8100/checkout.html",
+    "Thank you for ordering with Bhukkad!"
+  ];
+
+  return "https://api.whatsapp.com/send?text=" + encodeURIComponent(lines.join("\n"));
+}
+

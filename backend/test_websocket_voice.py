@@ -65,6 +65,15 @@ def test_websocket_voice():
         print("✓ Session reset passed")
 
 
+def test_websocket_voice_session_persistence():
+    client = TestClient(app)
+    with client.websocket_connect("/ws/voice?session_id=ws-persist-test-456") as ws:
+        init_data = ws.receive_json()
+        assert init_data.get("type") == "ready"
+        assert init_data.get("session_id") == "ws-persist-test-456"
+        print("✓ Session persistence via query param verified")
+
+
 def test_sentence_chunker():
     from app.voice_pipeline import SentenceChunker
 

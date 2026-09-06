@@ -94,7 +94,8 @@ import uuid
 
 async def handle_voice_websocket(websocket: WebSocket) -> None:
     await websocket.accept()
-    session = VoiceSession(f"ws-{uuid.uuid4().hex[:10]}")
+    qp_sid = websocket.query_params.get("session_id")
+    session = VoiceSession(qp_sid or f"ws-{uuid.uuid4().hex[:10]}")
 
     try:
         # Send initial ready state
