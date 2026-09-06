@@ -536,8 +536,9 @@ function connectWebSocket() {
   }
 
   const api = apiBase().replace(/^https?:\/\//, "");
+  const protocol = typeof window !== "undefined" && window.location && window.location.protocol === "https:" ? "wss://" : "ws://";
   const savedSessionId = sessionStorage.getItem("bhukkad_session_id");
-  const wsUrl = "ws://" + api + "/ws/voice" + (savedSessionId ? `?session_id=${encodeURIComponent(savedSessionId)}` : "");
+  const wsUrl = protocol + api + "/ws/voice" + (savedSessionId ? `?session_id=${encodeURIComponent(savedSessionId)}` : "");
   updateLiveStatus("Connecting...", "text-amber-400");
 
   ws = new WebSocket(wsUrl);

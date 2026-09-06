@@ -229,6 +229,9 @@ export function sessionId() {
 }
 
 export function apiBase() {
+  if (typeof window !== "undefined" && window.location && window.location.origin && !window.location.origin.startsWith("file:")) {
+    return window.location.origin;
+  }
   return "http://localhost:8100";
 }
 
@@ -322,7 +325,7 @@ export function getWhatsAppReceiptUrl(order) {
     `Delivery Address: ${address}`,
     `Estimated Time: ~${eta}`,
     "---------------------------",
-    "Track live: http://localhost:8100/checkout.html",
+    `Track live: ${typeof window !== "undefined" && window.location.origin ? window.location.origin : "http://localhost:8100"}/checkout.html`,
     "Thank you for ordering with Bhukkad!"
   ];
 
