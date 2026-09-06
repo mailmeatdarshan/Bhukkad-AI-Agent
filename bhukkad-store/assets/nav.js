@@ -78,13 +78,14 @@ export function renderHeader(activeNav = "") {
   header.className = "fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all";
   header.innerHTML = `
     <div class="max-w-[1200px] mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-2 sm:gap-4">
-      <!-- Brand Logo (Logo ONLY) -->
-      <a href="index.html" class="flex items-center flex-shrink-0 text-decoration-none group" title="Bhukkad Home">
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0 text-decoration-none group" title="Bhukkad Home">
         <img alt="Bhukkad Logo" class="h-9 w-9 md:h-10 md:w-10 object-contain rounded-md group-hover:scale-105 transition-transform" src="assets/logo.png"/>
+        <span class="font-headline-lg text-xl md:text-2xl font-black text-primary tracking-tight">Bhukkad</span>
       </a>
 
-      <!-- Search Bar -->
-      <div class="flex-1 max-w-md mx-2 sm:mx-6 relative">
+      <!-- Search Bar (Desktop only, untouched) -->
+      <div class="hidden md:flex flex-1 max-w-md mx-4 lg:mx-8 relative">
         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
           <span class="material-symbols-outlined text-[18px] sm:text-[20px]">search</span>
         </div>
@@ -152,7 +153,7 @@ export function renderHeader(activeNav = "") {
     }
   });
 
-  // Search Redirect
+  // Search Redirect (Desktop input)
   const searchInput = header.querySelector("#globalSearchInput");
   if (searchInput) {
     searchInput.addEventListener("keydown", (e) => {
@@ -180,12 +181,12 @@ export function renderBottomNav(activeNav = "") {
       <span class="text-[11px] font-medium">Menu</span>
     </a>
 
-    <!-- Center Voice AI Button -->
-    <button class="open-voice-assistant flex flex-col items-center justify-center relative px-2 bg-transparent border-none cursor-pointer">
-      <div class="absolute -top-7 bg-primary-container text-white p-3.5 rounded-full shadow-lg border-4 border-white dark:border-[#181311] flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
+    <!-- Center Voice AI Button (Elevated FAB) -->
+    <button class="open-voice-assistant flex flex-col items-center justify-end pb-1.5 relative h-full px-3 bg-transparent border-none cursor-pointer">
+      <div class="absolute -top-8 bg-primary-container text-white p-3.5 rounded-full shadow-[0_4px_18px_rgba(238,99,34,0.5)] border-4 border-white dark:border-[#181311] flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
         <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">mic</span>
       </div>
-      <span class="text-[11px] font-bold text-primary mt-6">Voice AI</span>
+      <span class="text-[11px] font-bold text-primary tracking-tight">Voice AI</span>
     </button>
 
     <a href="checkout.html" class="flex flex-col items-center justify-center ${activeNav === 'checkout' ? 'text-primary font-bold' : 'text-on-surface-variant'} transition-colors px-3 py-1 relative">

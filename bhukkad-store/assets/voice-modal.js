@@ -111,6 +111,21 @@ function injectStyles() {
       background: rgba(255, 87, 34, 0.25);
       border-radius: 4px;
     }
+
+    /* Clean Input Styling - Completely remove browser/Tailwind Forms blue border & ring */
+    #bhukkadChatInput,
+    #bhukkadChatInput:focus,
+    #bhukkadChatInput:active,
+    #bhukkadChatInput:focus-visible {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+      --tw-ring-color: transparent !important;
+      --tw-ring-shadow: none !important;
+      --tw-ring-offset-shadow: none !important;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -132,7 +147,7 @@ export function mountVoiceAssistant() {
   container.innerHTML = `
     <!-- 1. ORB ONLY FAB MODE (State A - Compact Rotating Saffron Orb) -->
     <div id="bhukkadOrbFab" class="hidden cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-200" title="Foodie Assistant">
-      <div class="w-10 h-10 sm:w-12 sm:h-12 bhukkad-ai-orb spinning shadow-xl p-1 flex items-center justify-center">
+      <div class="w-14 h-14 sm:w-12 sm:h-12 bhukkad-ai-orb spinning shadow-2xl p-1.5 sm:p-1 flex items-center justify-center">
         <img src="assets/logo.png" alt="Bhukkad AI" class="w-full h-full object-contain rounded-full drop-shadow-sm" onerror="this.style.display='none'"/>
       </div>
     </div>
@@ -275,21 +290,18 @@ export function mountVoiceAssistant() {
         </div>
 
         <!-- Bottom Input Container (Bhukkad Warm Theme Box) -->
-        <div class="bg-[#15100f] border border-primary/30 rounded-2xl p-2 sm:p-2.5 flex flex-col gap-1.5 sm:gap-2 flex-shrink-0 focus-within:border-primary transition-colors">
-          <textarea id="bhukkadChatInput" rows="2" placeholder="Dishes boliye ya type karein..." class="bg-transparent text-white text-xs placeholder-white/40 outline-none resize-none px-1 py-0.5 leading-normal w-full"></textarea>
+        <div class="bg-[#1c1614] border border-white/10 rounded-2xl p-2.5 sm:p-3 flex flex-col gap-2 flex-shrink-0 focus-within:border-primary/60 focus-within:shadow-[0_0_16px_rgba(255,87,34,0.18)] transition-all">
+          <textarea id="bhukkadChatInput" rows="2" placeholder="Dishes boliye ya type karein..." class="bg-transparent text-white text-[13px] sm:text-sm placeholder-white/40 border-none outline-none focus:outline-none focus:ring-0 focus:border-none ring-0 shadow-none resize-none px-1 py-0.5 leading-relaxed w-full"></textarea>
           
-          <div class="flex items-center justify-between pt-1 border-t border-white/5">
-            <span class="text-[9px] sm:text-[10px] text-white/40 font-medium">Enter dabakar bhejo</span>
-            <div class="flex items-center gap-1.5 sm:gap-2">
-              <!-- Call / Mic Toggle -->
-              <button id="chatMicCallBtn" class="w-7 h-7 sm:w-8 sm:h-8 bg-[#261d1a] hover:bg-primary/20 border border-primary/40 text-white rounded-xl flex items-center justify-center transition-all active:scale-95" title="Start Voice Call">
-                <span id="chatMicIcon" class="material-symbols-outlined text-[15px] sm:text-[16px]">call</span>
-              </button>
-              <!-- Send Button (Saffron CTA) -->
-              <button id="chatSendBtn" class="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-primary to-[#ff6b00] hover:brightness-110 text-white rounded-xl flex items-center justify-center transition-all active:scale-95 shadow-sm" title="Send Message">
-                <span class="material-symbols-outlined text-[15px] sm:text-[16px]">arrow_upward</span>
-              </button>
-            </div>
+          <div class="flex items-center justify-end gap-2 pt-1.5 border-t border-white/5">
+            <!-- Call / Mic Toggle -->
+            <button id="chatMicCallBtn" class="w-8 h-8 sm:w-8 sm:h-8 bg-[#2a1f1b] hover:bg-primary/25 border border-white/10 hover:border-primary/50 text-white rounded-xl flex items-center justify-center transition-all active:scale-95 cursor-pointer shadow-sm" title="Start Voice Call">
+              <span id="chatMicIcon" class="material-symbols-outlined text-[16px] sm:text-[17px]">call</span>
+            </button>
+            <!-- Send Button (Saffron CTA) -->
+            <button id="chatSendBtn" class="w-8 h-8 sm:w-8 sm:h-8 bg-gradient-to-r from-primary to-[#ff6b00] hover:brightness-110 text-white rounded-xl flex items-center justify-center transition-all active:scale-95 cursor-pointer shadow-md shadow-primary/25" title="Send Message">
+              <span class="material-symbols-outlined text-[16px] sm:text-[17px]">arrow_upward</span>
+            </button>
           </div>
         </div>
       </div>
@@ -376,6 +388,9 @@ function bindWidgetEvents() {
 
   // Expanded Close / Minimize
   document.getElementById("expandedCloseBtn")?.addEventListener("click", () => {
+    if (isFullscreen) {
+      toggleFullscreen();
+    }
     if (window.innerWidth < 640) {
       setVoiceMode("orb");
     } else {
@@ -383,6 +398,9 @@ function bindWidgetEvents() {
     }
   });
   document.getElementById("dockMinimizeBtn")?.addEventListener("click", () => {
+    if (isFullscreen) {
+      toggleFullscreen();
+    }
     if (window.innerWidth < 640) {
       setVoiceMode("orb");
     } else {
@@ -393,6 +411,24 @@ function bindWidgetEvents() {
   // Fullscreen toggle
   document.getElementById("expandedFullscreenBtn")?.addEventListener("click", toggleFullscreen);
   document.getElementById("dockFullscreenBtn")?.addEventListener("click", toggleFullscreen);
+
+  // Click outside backdrop in fullscreen mode to exit fullscreen
+  document.getElementById("bhukkadWidgetContainer")?.addEventListener("click", (e) => {
+    if (isFullscreen && e.target.id === "bhukkadWidgetContainer") {
+      toggleFullscreen();
+    }
+  });
+
+  // Escape key to exit fullscreen or minimize
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (isFullscreen) {
+        toggleFullscreen();
+      } else if (currentMode === "expanded") {
+        setVoiceMode(window.innerWidth < 640 ? "orb" : "pill");
+      }
+    }
+  });
 
   // Chat Send Actions
   const chatInput = document.getElementById("bhukkadChatInput");
@@ -424,14 +460,35 @@ function bindWidgetEvents() {
   document.querySelectorAll(".open-voice-assistant").forEach(btn => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
-      setVoiceMode("expanded");
-      startVoiceCall();
+      openVoiceOverlay();
     });
   });
 }
 
 export function setVoiceMode(mode) {
   currentMode = mode;
+  if (mode !== "expanded") {
+    if (isFullscreen) {
+      isFullscreen = false;
+      const expFsBtn = document.getElementById("expandedFullscreenBtn");
+      const dockFsBtn = document.getElementById("dockFullscreenBtn");
+      if (expFsBtn) {
+        expFsBtn.innerHTML = `<span class="material-symbols-outlined text-[17px] sm:text-[18px]">open_in_full</span>`;
+        expFsBtn.title = "Toggle Fullscreen";
+      }
+      if (dockFsBtn) {
+        dockFsBtn.innerHTML = `<span class="material-symbols-outlined text-[15px] sm:text-[16px]">open_in_full</span>`;
+        dockFsBtn.title = "Expand";
+      }
+    }
+    const card = document.getElementById("bhukkadChatCard");
+    if (card) {
+      card.style.width = "";
+      card.style.height = "";
+      card.style.maxWidth = "";
+      card.style.maxHeight = "";
+    }
+  }
   renderMode();
 }
 
@@ -455,12 +512,17 @@ function renderMode() {
       } else {
         container.className = "fixed bottom-6 right-6 z-[75] text-white select-none";
       }
+    } else {
+      container.className = "fixed inset-0 z-[999] text-white flex items-center justify-center p-3 sm:p-6 bg-black/65 backdrop-blur-md";
     }
     // Ensure the chat card fits within small screens (account for browser UI)
     const cardEl = document.getElementById("bhukkadChatCard");
     if (cardEl) {
       if (isFullscreen) {
-        cardEl.style.maxHeight = "100%";
+        cardEl.style.width = "100%";
+        cardEl.style.height = "100%";
+        cardEl.style.maxWidth = "880px";
+        cardEl.style.maxHeight = "85vh";
       } else if (window.innerWidth < 640) {
         cardEl.style.height = "min(540px, calc(100dvh - 190px))";
       } else {
@@ -473,9 +535,8 @@ function renderMode() {
     }, 150);
   } else {
     // Reset container for floating modes
-    if (!isFullscreen) {
-      container.className = "fixed bottom-[76px] right-3 sm:bottom-6 sm:right-6 z-[75] text-white select-none";
-    }
+    isFullscreen = false;
+    container.className = "fixed bottom-[76px] right-3 sm:bottom-6 sm:right-6 z-[75] text-white select-none";
   }
 }
 
@@ -483,19 +544,37 @@ function toggleFullscreen() {
   isFullscreen = !isFullscreen;
   const card = document.getElementById("bhukkadChatCard");
   const container = document.getElementById("bhukkadWidgetContainer");
+  const expFsBtn = document.getElementById("expandedFullscreenBtn");
+  const dockFsBtn = document.getElementById("dockFullscreenBtn");
   if (!card || !container) return;
 
   if (isFullscreen) {
-    container.className = "fixed inset-2 sm:inset-8 z-[999] text-white flex items-center justify-center";
+    container.className = "fixed inset-0 z-[999] text-white flex items-center justify-center p-3 sm:p-6 bg-black/65 backdrop-blur-md";
     card.style.width = "100%";
     card.style.height = "100%";
-    card.style.maxWidth = "800px";
-    card.style.maxHeight = "760px";
+    card.style.maxWidth = "880px";
+    card.style.maxHeight = "85vh";
+    if (expFsBtn) {
+      expFsBtn.innerHTML = `<span class="material-symbols-outlined text-[17px] sm:text-[18px]">close_fullscreen</span>`;
+      expFsBtn.title = "Exit Fullscreen (Esc)";
+    }
+    if (dockFsBtn) {
+      dockFsBtn.innerHTML = `<span class="material-symbols-outlined text-[15px] sm:text-[16px]">close_fullscreen</span>`;
+      dockFsBtn.title = "Exit Fullscreen (Esc)";
+    }
   } else {
     card.style.width = "";
     card.style.height = "";
     card.style.maxWidth = "";
     card.style.maxHeight = "";
+    if (expFsBtn) {
+      expFsBtn.innerHTML = `<span class="material-symbols-outlined text-[17px] sm:text-[18px]">open_in_full</span>`;
+      expFsBtn.title = "Toggle Fullscreen";
+    }
+    if (dockFsBtn) {
+      dockFsBtn.innerHTML = `<span class="material-symbols-outlined text-[15px] sm:text-[16px]">open_in_full</span>`;
+      dockFsBtn.title = "Expand";
+    }
     renderMode();
   }
 }
