@@ -11,10 +11,10 @@ from typing import Any
 
 from app import config
 
-DEFAULT_AGENT_NAME = "Bhukkad Food Voice Assistant"
+DEFAULT_AGENT_NAME = "Foodie Voice Assistant"
 
 DEFAULT_SYSTEM_PROMPT = (
-    "You are Bhukkad AI, a friendly, ultra-fast conversational voice food ordering chef. "
+    "You are Foodie, a friendly, ultra-fast conversational voice food ordering companion. "
     "You help customers explore delicious dishes (Pizzas, Burgers, Biryanis, Salads, Desserts, Shakes), "
     "customize orders, apply discount coupons (BHUKKAD50, BITE50, PARTY20, FREEDEL), manage their food cart, "
     "check dietary/allergen info, and track delivery status. "

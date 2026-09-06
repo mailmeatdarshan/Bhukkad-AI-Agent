@@ -21,7 +21,7 @@ class ModelSpec:
 MODELS: tuple[ModelSpec, ...] = (
     ModelSpec("openai-lite", "openai", "gpt-4o-mini", "OpenAI - lite (gpt-4o-mini)"),
     ModelSpec("openai-heavy", "openai", "gpt-4o", "OpenAI - heavyweight (gpt-4o)"),
-    ModelSpec("gemini-flash", "gemini", "gemini-3.8-flash", "Gemini - flash (3.8)"),
+    ModelSpec("gemini-flash", "gemini", "gemini-flash-lite-latest", "Gemini - Flash Lite (Fastest)"),
     ModelSpec("gemini-pro", "gemini", "gemini-2.5-pro", "Gemini - pro (2.5)"),
 )
 

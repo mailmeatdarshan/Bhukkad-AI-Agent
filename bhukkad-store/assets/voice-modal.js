@@ -15,9 +15,9 @@ let isFullscreen = false;
 let isMounted = false;
 
 const GREETINGS = {
-  hinglish: "Namaste! Main hoon aapka Bhukkad AI Food Assistant. Bataiye aaj kya mangwana pasand karenge? Biryani, Pizza ya Sweets?",
-  english: "Hey there! I'm your Bhukkad AI Assistant. What delicious meal can I get for you today?",
-  hindi: "नमस्ते! मैं आपका भुक्कड़ एआई फ़ूड असिस्टेंट हूँ। बताइए आज क्या ऑर्डर करना पसंद करेंगे?",
+  hinglish: "Arre boss! Main hoon Foodie. Bhookh lagi hai toh tension mat lo, bas batao aaj kya khane ka mood hai - Masaledaar Biryani, Cheesy Pizza ya kuch meetha?",
+  english: "Hey foodie! I'm Foodie. Feeling hungry? Just tell me what you're craving - Sizzling Biryani, Cheesy Pizza, or sweet desserts?",
+  hindi: "नमस्ते! मैं हूँ Foodie. ज़ोरों की भूख लगी है? बस बताइए आज क्या खाने का मन है - गरमा-गरम बिरयानी, चीज़ी पिज़्ज़ा या कुछ मीठा?",
 };
 
 const LANG_LABELS = {
@@ -131,7 +131,7 @@ export function mountVoiceAssistant() {
 
   container.innerHTML = `
     <!-- 1. ORB ONLY FAB MODE (State A - Compact Rotating Saffron Orb) -->
-    <div id="bhukkadOrbFab" class="hidden cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-200" title="Bhukkad AI Assistant">
+    <div id="bhukkadOrbFab" class="hidden cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-200" title="Foodie Assistant">
       <div class="w-10 h-10 sm:w-12 sm:h-12 bhukkad-ai-orb spinning shadow-xl p-1 flex items-center justify-center">
         <img src="assets/logo.png" alt="Bhukkad AI" class="w-full h-full object-contain rounded-full drop-shadow-sm" onerror="this.style.display='none'"/>
       </div>
@@ -145,9 +145,8 @@ export function mountVoiceAssistant() {
           <div class="w-5 h-5 sm:w-6 sm:h-6 bhukkad-ai-orb spinning p-0.5">
             <img src="assets/logo.png" alt="Bhukkad" class="w-full h-full object-contain rounded-full" onerror="this.style.display='none'"/>
           </div>
-          <span class="font-bold text-xs sm:text-[14px] tracking-tight text-white/95 flex items-center gap-1">
-            <span>Bhookh lagi hai?</span>
-            <span class="text-[11px] text-primary">✨</span>
+          <span class="font-bold text-xs sm:text-[14px] tracking-tight text-white/95">
+            Bhookh lagi hai?
           </span>
         </div>
         <button id="pillMinimizeBtn" class="text-white/40 hover:text-primary transition-colors p-1 rounded-full text-xs cursor-pointer" title="Minimize to orb">
@@ -207,8 +206,7 @@ export function mountVoiceAssistant() {
             </div>
             <div>
               <div class="text-xs font-bold text-white leading-tight flex items-center gap-1">
-                <span>Bhukkad AI Chef</span>
-                <span class="text-[10px] text-primary">🌶️</span>
+                <span>Foodie</span>
               </div>
               <div id="expandedLiveStatus" class="text-[10px] text-secondary font-medium flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
