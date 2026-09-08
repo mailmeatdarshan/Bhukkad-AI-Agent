@@ -106,18 +106,21 @@ export function computeBill(items = null, coupon = null) {
 
 export function addToCart(product, tierName = null, quantity = 1, customization = "") {
   const items = loadCart();
-  const prodName = typeof product === "string" ? product : (product.name || "Dish");
-  const prodId = typeof product === "object" && product.id ? product.id : prodName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const prodName = typeof product === "string" ? product.trim() : (product.name || product.product_name || "Dish").trim();
+  const prodId = typeof product === "object" && product !== null && product.id
+    ? String(product.id).trim()
+    : prodName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   
-  let chosenTierName = tierName;
+  let chosenTierName = tierName ? String(tierName).trim() : null;
   let price = 749;
   let isVeg = true;
   let imgUrl = "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80";
 
   if (typeof product === "object" && product !== null) {
     if (product.tiers && product.tiers.length) {
-      if (!chosenTierName) {
-        chosenTierName = product.tiers[0].name;
+      if (!chosenTierName || chosenTierName.toLowerCase() === "regular" || chosenTierName.toLowerCase() === "standard") {
+        const found = product.tiers.find(x => (x.name || "").toLowerCase() === (chosenTierName || "").toLowerCase());
+        chosenTierName = found ? found.name : product.tiers[0].name;
       }
       const t = product.tiers.find(x => (x.name || "").toLowerCase() === chosenTierName.toLowerCase()) || product.tiers[0];
       chosenTierName = t.name;
@@ -129,16 +132,29 @@ export function addToCart(product, tierName = null, quantity = 1, customization 
 
   if (!chosenTierName) chosenTierName = "Regular";
 
-  const numQty = Number(quantity) || 1;
-  const existingIdx = items.findIndex(
-    i => (i.product_name || i.name || "").toLowerCase().trim() === prodName.toLowerCase().trim() &&
-         (i.tier || "Regular").toLowerCase().trim() === chosenTierName.toLowerCase().trim()
-  );
+  const numQty = Math.max(1, parseInt(quantity, 10) || 1);
+  const targetName = prodName.toLowerCase();
+  const targetId = prodId.toLowerCase();
+  const targetTier = chosenTierName.toLowerCase();
+
+  const existingIdx = items.findIndex(i => {
+    const iId = (i.product_id || "").toLowerCase().trim();
+    const iName = (i.product_name || i.name || "").toLowerCase().trim();
+    const matchProd = (iId && iId === targetId) || (iName && iName === targetName);
+    if (!matchProd) return false;
+
+    const iTier = (i.tier || "Regular").toLowerCase().trim();
+    return iTier === targetTier ||
+      (targetTier.startsWith("regular") && iTier === "regular") ||
+      (iTier.startsWith("regular") && targetTier === "regular");
+  });
 
   if (existingIdx >= 0) {
-    const prev = Number(items[existingIdx].quantity || items[existingIdx].seats || 1);
-    items[existingIdx].quantity = prev + numQty;
-    items[existingIdx].seats = prev + numQty;
+    const prev = Math.max(0, parseInt(items[existingIdx].quantity || items[existingIdx].seats || 1, 10));
+    const nextQty = prev + numQty;
+    items[existingIdx].quantity = nextQty;
+    items[existingIdx].seats = nextQty;
+    items[existingIdx].tier = chosenTierName;
     if (customization) items[existingIdx].customization = customization;
   } else {
     items.push({
@@ -160,25 +176,39 @@ export function addToCart(product, tierName = null, quantity = 1, customization 
   return items;
 }
 
-export function removeFromCart(productName, quantity = 1, tierName = null) {
+export function removeFromCart(productOrName, quantity = 1, tierName = null) {
   let items = loadCart();
-  const pName = (productName || "").toLowerCase().trim();
-  const tName = tierName ? tierName.toLowerCase().trim() : null;
+  const targetId = typeof productOrName === "object" && productOrName !== null && productOrName.id
+    ? String(productOrName.id).toLowerCase().trim()
+    : (typeof productOrName === "string" ? productOrName.toLowerCase().trim() : "");
+  const targetName = typeof productOrName === "object" && productOrName !== null
+    ? (productOrName.name || productOrName.product_name || "").toLowerCase().trim()
+    : (typeof productOrName === "string" ? productOrName.toLowerCase().trim() : "");
+  const tName = tierName ? String(tierName).toLowerCase().trim() : null;
+  const decQty = Math.max(1, parseInt(quantity, 10) || 1);
 
   const idx = items.findIndex(i => {
-    const matchName = (i.product_name || i.name || "").toLowerCase().trim() === pName ||
-                      (i.product_id || "").toLowerCase().trim() === pName;
-    const matchTier = !tName || (i.tier || "Regular").toLowerCase().trim() === tName;
-    return matchName && matchTier;
+    const iId = (i.product_id || "").toLowerCase().trim();
+    const iName = (i.product_name || i.name || "").toLowerCase().trim();
+    const matchProduct = (targetId && iId === targetId) ||
+                         (targetName && iName === targetName) ||
+                         (targetName && iId === targetName) ||
+                         (targetId && iName === targetId);
+    if (!matchProduct) return false;
+
+    if (!tName) return true;
+    const iTier = (i.tier || "Regular").toLowerCase().trim();
+    return iTier === tName ||
+      (tName.startsWith("regular") && iTier === "regular") ||
+      (iTier.startsWith("regular") && tName === "regular");
   });
 
   if (idx >= 0) {
-    const currentQty = Number(items[idx].quantity || items[idx].seats || 1);
-    const itemTier = items[idx].tier || "Regular";
+    const curQty = Math.max(0, parseInt(items[idx].quantity || items[idx].seats || 1, 10));
     const itemName = items[idx].product_name || items[idx].name;
-    if (quantity && currentQty > quantity) {
-      items[idx].quantity = currentQty - quantity;
-      items[idx].seats = currentQty - quantity;
+    if (curQty > decQty) {
+      items[idx].quantity = curQty - decQty;
+      items[idx].seats = curQty - decQty;
       showToast(`${itemName} ki quantity kam kar di`);
     } else {
       items.splice(idx, 1);

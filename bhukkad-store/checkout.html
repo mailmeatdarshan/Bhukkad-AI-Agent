@@ -205,7 +205,7 @@
             <span id="summaryItemCount" class="text-xs font-normal text-on-surface-variant">0 items</span>
           </h2>
 
-          <div id="checkoutItemList" class="space-y-3 mb-5 max-h-[260px] overflow-y-auto pr-1"></div>
+          <div id="checkoutItemsList" class="space-y-3 mb-5 max-h-[260px] overflow-y-auto pr-1"></div>
 
           <!-- Coupon Box -->
           <div class="mb-5">
@@ -213,7 +213,10 @@
               <input id="couponInput" type="text" placeholder="Coupon code (e.g. BHUKKAD50)" class="flex-1 uppercase bg-surface text-on-surface text-xs rounded-xl px-3.5 py-2.5 border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-primary-container"/>
               <button id="btnApplyCoupon" class="bg-surface-container hover:bg-surface-variant text-on-surface font-bold text-xs px-4 py-2.5 rounded-xl border border-outline-variant/40 transition-colors">Apply</button>
             </div>
-            <div id="couponAppliedLabel" class="hidden mt-2 text-xs font-bold text-secondary flex items-center gap-1"></div>
+            <div id="couponAppliedRow" class="hidden mt-2 text-xs font-bold text-secondary items-center justify-between">
+              <div id="couponAppliedLabel" class="flex items-center gap-1"></div>
+              <button id="removeCouponBtn" type="button" class="text-error hover:underline text-[11px] font-semibold cursor-pointer">Remove</button>
+            </div>
           </div>
 
           <div class="border-t border-dashed border-outline-variant pt-4 mb-5 space-y-2">
@@ -383,6 +386,11 @@
         </div>`).join("");
     }
 
+    const countEl = document.getElementById("summaryItemCount");
+    if (countEl) {
+      countEl.textContent = `${bill.count} dish${bill.count === 1 ? '' : 'es'}`;
+    }
+
     document.getElementById("billItemTotal").textContent = fmt(bill.subtotal);
     document.getElementById("billDeliveryFee").textContent = bill.deliveryFee > 0 ? fmt(bill.deliveryFee) : "FREE";
     document.getElementById("billTaxes").textContent = fmt(bill.taxes);
@@ -401,13 +409,23 @@
 
     const coupon = getCoupon();
     const couponRow = document.getElementById("couponAppliedRow");
+    const couponLabel = document.getElementById("couponAppliedLabel");
     if (coupon) {
-      couponRow.classList.remove("hidden");
-      couponRow.classList.add("flex");
-      document.getElementById("couponAppliedLabel").innerHTML = `<span class="material-symbols-outlined text-[14px]">confirmation_number</span> ${coupon} applied`;
+      if (couponRow) {
+        couponRow.classList.remove("hidden");
+        couponRow.classList.add("flex");
+      }
+      if (couponLabel) {
+        couponLabel.innerHTML = `<span class="material-symbols-outlined text-[14px]">confirmation_number</span> ${coupon} applied`;
+      }
     } else {
-      couponRow.classList.add("hidden");
-      couponRow.classList.remove("flex");
+      if (couponRow) {
+        couponRow.classList.add("hidden");
+        couponRow.classList.remove("flex");
+      }
+      if (couponLabel) {
+        couponLabel.innerHTML = "";
+      }
     }
   }
 
@@ -508,23 +526,33 @@
     renderFooter();
     syncLocation();
 
-    const applyBtn = document.getElementById("applyCouponBtn");
+    const applyBtn = document.getElementById("btnApplyCoupon") || document.getElementById("applyCouponBtn");
     const couponInput = document.getElementById("couponInput");
-    applyBtn.addEventListener("click", () => {
-      const res = applyCoupon(couponInput.value);
-      if (res && !res.ok && res.message) {
-        setCheckoutError(res.message);
-      } else {
-        setCheckoutError("");
-        couponInput.value = "";
-      }
-    });
+    if (applyBtn && couponInput) {
+      applyBtn.addEventListener("click", () => {
+        const res = applyCoupon(couponInput.value);
+        if (res && !res.ok && res.message) {
+          setCheckoutError(res.message);
+        } else {
+          setCheckoutError("");
+          couponInput.value = "";
+        }
+      });
+      couponInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          applyBtn.click();
+        }
+      });
+    }
 
-    document.getElementById("removeCouponBtn").addEventListener("click", () => {
-      setCoupon("");
-      couponInput.value = "";
-      setCheckoutError("");
-    });
+    const removeBtn = document.getElementById("removeCouponBtn");
+    if (removeBtn) {
+      removeBtn.addEventListener("click", () => {
+        setCoupon("");
+        if (couponInput) couponInput.value = "";
+        setCheckoutError("");
+      });
+    }
 
     document.getElementById("btnChangeAddress").addEventListener("click", () => {
       const locBtn = document.getElementById("btnNavLocation");

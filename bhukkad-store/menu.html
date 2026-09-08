@@ -181,7 +181,7 @@
 
 <script type="module">
   import { renderHeader, renderBottomNav, renderFooter } from "./assets/nav.js";
-  import { addToCart, removeFromCart, loadCart, computeBill } from "./assets/cart-state.js";
+  import { addToCart, removeFromCart, clearCart, loadCart, computeBill } from "./assets/cart-state.js";
 
   const CAT_ICONS = {
     "pizzas-pastas": "🍕",
@@ -248,23 +248,62 @@
   }
 
   function qtyOf(product, tierName) {
-    const pName = (product.name || "").toLowerCase().trim();
+    if (!product) return 0;
+    const pId = (product.id || "").toLowerCase().trim();
+    const pName = (product.name || product.product_name || "").toLowerCase().trim();
     const tName = (tierName || (product.tiers && product.tiers[0] ? product.tiers[0].name : "Regular")).toLowerCase().trim();
     return loadCart().reduce((acc, it) => {
-      const matchName = (it.product_id || "").toLowerCase().trim() === product.id.toLowerCase() ||
-                        (it.product_name || it.name || "").toLowerCase().trim() === pName;
-      const matchTier = (it.tier || "Regular").toLowerCase().trim() === tName;
-      if (matchName && matchTier) {
-        return acc + Number(it.quantity || it.seats || 1);
+      const itId = (it.product_id || "").toLowerCase().trim();
+      const itName = (it.product_name || it.name || "").toLowerCase().trim();
+      const matchProd = (itId && itId === pId) || (itName && itName === pName);
+      if (!matchProd) return acc;
+
+      const itTier = (it.tier || "Regular").toLowerCase().trim();
+      const matchTier = itTier === tName ||
+        (tName.startsWith("regular") && itTier === "regular") ||
+        (itTier.startsWith("regular") && tName === "regular");
+      if (matchTier) {
+        return acc + Math.max(0, parseInt(it.quantity || it.seats || 1, 10));
       }
       return acc;
     }, 0);
   }
 
+  function renderQtyControlHtml(product, tier) {
+    const qty = qtyOf(product, tier.name);
+    if (qty > 0) {
+      return `
+        <div class="flex items-center gap-1 bg-secondary-container rounded-xl px-1.5 py-1 select-none shadow-xs">
+          <button type="button" class="qty-dec text-on-secondary font-bold w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/40 active:scale-90 transition-all cursor-pointer touch-manipulation" data-id="${product.id}" data-tier="${escapeHtml(tier.name)}" data-name="${escapeHtml(product.name)}" title="Quantity kam karo">
+            <span class="material-symbols-outlined text-[18px]">remove</span>
+          </button>
+          <span class="qty-num text-on-surface font-bold text-sm min-w-[22px] text-center">${qty}</span>
+          <button type="button" class="qty-inc text-on-secondary font-bold w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/40 active:scale-90 transition-all cursor-pointer touch-manipulation" data-id="${product.id}" data-tier="${escapeHtml(tier.name)}" data-name="${escapeHtml(product.name)}" title="Quantity badhao">
+            <span class="material-symbols-outlined text-[18px]">add</span>
+          </button>
+        </div>`;
+    }
+    return `
+      <button type="button" class="btn-add-food bg-primary-container text-white text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-primary active:scale-95 transition-all shadow-sm cursor-pointer touch-manipulation" data-id="${product.id}">
+        ADD
+      </button>`;
+  }
+
+  function syncCardQuantities() {
+    if (!catalog.products) return;
+    catalog.products.forEach(p => {
+      const box = document.getElementById(`qty-ctrl-${p.id}`);
+      if (box) {
+        const tierIdx = chosenTier[p.id] || 0;
+        const tier = p.tiers[tierIdx] || p.tiers[0];
+        box.innerHTML = renderQtyControlHtml(p, tier);
+      }
+    });
+  }
+
   function productCard(product) {
     const tierIdx = chosenTier[product.id] || 0;
     const tier = product.tiers[tierIdx] || product.tiers[0];
-    const qty = qtyOf(product, tier.name);
     const imgUrl = product.image || "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80";
     return `
       <div class="bg-surface rounded-2xl border border-outline-variant/20 shadow-sm overflow-hidden hover:shadow-md transition-shadow flex flex-col group">
@@ -289,18 +328,14 @@
           </div>
           <div class="mt-3.5 flex items-end justify-between gap-2">
             <div class="min-w-0">
-              <select class="tier-select w-full max-w-[150px] text-xs font-semibold bg-surface-container rounded-lg px-2 py-1.5 border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-primary-container" data-id="${product.id}">
+              <select class="tier-select w-full max-w-[150px] text-xs font-semibold bg-surface-container rounded-lg px-2 py-1.5 border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-primary-container cursor-pointer" data-id="${product.id}">
                 ${product.tiers.map((t, i) => `<option value="${i}" ${i === tierIdx ? "selected" : ""}>${escapeHtml(t.name)}</option>`).join("")}
               </select>
               <div id="price-${product.id}" class="font-headline-md font-bold text-primary text-[18px] mt-1.5">${fmt(tier.priceMonthly)}</div>
             </div>
-            ${qty > 0
-              ? `<div class="flex items-center gap-1 bg-secondary-container rounded-xl px-2 py-1.5">
-                  <button class="qty-dec text-on-secondary font-bold w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/40 transition-colors" data-id="${product.id}" data-tier="${escapeHtml(tier.name)}" data-name="${escapeHtml(product.name)}"><span class="material-symbols-outlined text-[16px]">remove</span></button>
-                  <span class="qty-num text-on-surface font-bold text-sm w-6 text-center">${qty}</span>
-                  <button class="qty-inc text-on-secondary font-bold w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/40 transition-colors" data-id="${product.id}" data-tier="${escapeHtml(tier.name)}" data-name="${escapeHtml(product.name)}"><span class="material-symbols-outlined text-[16px]">add</span></button>
-                </div>`
-              : `<button class="btn-add-food bg-primary-container text-white text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-primary active:scale-95 transition-all shadow-sm" data-id="${product.id}">ADD</button>`}
+            <div id="qty-ctrl-${product.id}" class="flex-shrink-0">
+              ${renderQtyControlHtml(product, tier)}
+            </div>
           </div>
         </div>
       </div>
@@ -322,44 +357,6 @@
     empty.classList.add("hidden");
     countEl.textContent = `${list.length} dish${list.length > 1 ? "es" : ""}`;
     grid.innerHTML = list.map(productCard).join("");
-
-    grid.querySelectorAll(".tier-select").forEach(sel => {
-      sel.addEventListener("change", () => {
-        const p = byId[sel.dataset.id];
-        if (!p) return;
-        chosenTier[p.id] = Number(sel.value);
-        renderGrid();
-      });
-    });
-
-    grid.querySelectorAll(".btn-add-food").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const p = byId[btn.dataset.id];
-        if (!p) return;
-        const tierName = p.tiers[chosenTier[p.id] || 0].name;
-        addToCart(p, tierName, 1);
-        renderGrid();
-      });
-    });
-
-    grid.querySelectorAll(".qty-inc").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const p = byId[btn.dataset.id];
-        if (!p) return;
-        const tierName = btn.dataset.tier || p.tiers[chosenTier[p.id] || 0].name;
-        addToCart(p, tierName, 1);
-        renderGrid();
-      });
-    });
-
-    grid.querySelectorAll(".qty-dec").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const p = byId[btn.dataset.id];
-        const tierName = btn.dataset.tier || (p ? p.tiers[chosenTier[p.id] || 0].name : null);
-        removeFromCart(btn.dataset.name, 1, tierName);
-        renderGrid();
-      });
-    });
   }
 
   function renderCart() {
@@ -390,28 +387,33 @@
                 <div class="font-bold text-on-surface mt-1">${fmt(lineTotal)}</div>
               </div>
               <div class="flex items-center gap-1 bg-surface-container rounded-lg px-1.5 py-1 border border-outline-variant/30 flex-shrink-0">
-                <button class="cart-dec text-on-surface-variant hover:text-primary transition-colors px-1" data-name="${escapeHtml(name)}" data-tier="${escapeHtml(tier)}"><span class="material-symbols-outlined text-[16px]">remove</span></button>
+                <button type="button" class="cart-dec text-on-surface-variant hover:text-primary transition-colors px-1 cursor-pointer" data-id="${escapeHtml(it.product_id || '')}" data-name="${escapeHtml(name)}" data-tier="${escapeHtml(tier)}"><span class="material-symbols-outlined text-[16px]">remove</span></button>
                 <span class="font-bold text-sm text-on-surface w-5 text-center">${it.quantity || it.seats || 1}</span>
-                <button class="cart-inc px-1 text-on-surface-variant hover:text-primary transition-colors" data-name="${escapeHtml(name)}" data-tier="${escapeHtml(tier)}"><span class="material-symbols-outlined text-[16px]">add</span></button>
+                <button type="button" class="cart-inc px-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-id="${escapeHtml(it.product_id || '')}" data-name="${escapeHtml(name)}" data-tier="${escapeHtml(tier)}"><span class="material-symbols-outlined text-[16px]">add</span></button>
               </div>
             </div>`;
         }).join("");
       }
       if (subtotalEl) subtotalEl.textContent = fmt(bill.subtotal);
       list.querySelectorAll(".cart-dec").forEach(b => {
-        b.addEventListener("click", () => {
-          removeFromCart(b.dataset.name, 1, b.dataset.tier);
-          renderGrid();
+        b.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const p = (b.dataset.id && byId[b.dataset.id]) || byName[(b.dataset.name || "").toLowerCase()];
+          removeFromCart(p || b.dataset.name, 1, b.dataset.tier);
         });
       });
       list.querySelectorAll(".cart-inc").forEach(b => {
-        const p = byName[(b.dataset.name || "").toLowerCase()] || byId[b.dataset.id];
-        if (p) {
-          addToCart(p, b.dataset.tier || p.tiers[0].name, 1);
-        } else {
-          addToCart(b.dataset.name, b.dataset.tier, 1);
-        }
-        renderGrid();
+        b.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const p = (b.dataset.id && byId[b.dataset.id]) || byName[(b.dataset.name || "").toLowerCase()];
+          if (p) {
+            addToCart(p, b.dataset.tier || p.tiers[0].name, 1);
+          } else {
+            addToCart(b.dataset.name, b.dataset.tier, 1);
+          }
+        });
       });
     }
 
@@ -425,7 +427,7 @@
       }
     }
 
-    renderGrid();
+    syncCardQuantities();
   }
 
   function updateUrl() {
@@ -461,6 +463,63 @@
     updateUrl();
     renderChips();
     renderGrid();
+  });
+
+  const btnClearCart = document.getElementById("btnClearCart");
+  if (btnClearCart) {
+    btnClearCart.addEventListener("click", () => {
+      clearCart();
+    });
+  }
+
+  // Event delegation on menuGrid for adding, incrementing, decrementing, and tier selection
+  const grid = document.getElementById("menuGrid");
+  grid.addEventListener("click", (e) => {
+    const btnAdd = e.target.closest(".btn-add-food");
+    if (btnAdd) {
+      e.preventDefault();
+      e.stopPropagation();
+      const p = byId[btnAdd.dataset.id];
+      if (!p) return;
+      const tier = p.tiers[chosenTier[p.id] || 0] || p.tiers[0];
+      addToCart(p, tier.name, 1);
+      return;
+    }
+
+    const btnInc = e.target.closest(".qty-inc");
+    if (btnInc) {
+      e.preventDefault();
+      e.stopPropagation();
+      const p = byId[btnInc.dataset.id];
+      if (!p) return;
+      const tierName = btnInc.dataset.tier || (p.tiers[chosenTier[p.id] || 0] || p.tiers[0]).name;
+      addToCart(p, tierName, 1);
+      return;
+    }
+
+    const btnDec = e.target.closest(".qty-dec");
+    if (btnDec) {
+      e.preventDefault();
+      e.stopPropagation();
+      const p = byId[btnDec.dataset.id];
+      const tierName = btnDec.dataset.tier || (p ? (p.tiers[chosenTier[p.id] || 0] || p.tiers[0]).name : null);
+      removeFromCart(p || btnDec.dataset.name, 1, tierName);
+      return;
+    }
+  });
+
+  grid.addEventListener("change", (e) => {
+    const sel = e.target.closest(".tier-select");
+    if (sel) {
+      const p = byId[sel.dataset.id];
+      if (!p) return;
+      chosenTier[p.id] = Number(sel.value);
+      const tier = p.tiers[chosenTier[p.id]] || p.tiers[0];
+      const priceEl = document.getElementById(`price-${p.id}`);
+      if (priceEl) priceEl.textContent = fmt(tier.priceMonthly);
+      const box = document.getElementById(`qty-ctrl-${p.id}`);
+      if (box) box.innerHTML = renderQtyControlHtml(p, tier);
+    }
   });
 
   (async function init() {
